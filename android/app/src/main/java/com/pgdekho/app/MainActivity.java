@@ -175,27 +175,62 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendLocationToWebView(double lat, double lon) {
-        String city = "Gurugram";
-        try {
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-            List<Address> addresses = geocoder.getFromLocation(lat, lon, 1);
-            if (addresses != null && !addresses.isEmpty()) {
-                Address addr = addresses.get(0);
-                if (addr.getLocality() != null) {
-                    city = addr.getLocality();
-                } else if (addr.getSubAdminArea() != null) {
-                    city = addr.getSubAdminArea();
-                } else if (addr.getAdminArea() != null) {
-                    city = addr.getAdminArea();
-                }
-            }
-        } catch (IOException ignored) {}
+        new Thread(() -> {
+            String city = "Bengaluru";
+            String locality = "";
+            String fullAddress = "";
+            try {
+                Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
+                List<Address> addresses = geocoder.getFromLocation(lat, lon, 1);
+                if (addresses != null && !addresses.isEmpty()) {
+                    Address addr = addresses.get(0);
+                    if (addr.getLocality() != null && !addr.getLocality().isEmpty()) {
+                        city = addr.getLocality();
+                    } else if (addr.getSubAdminArea() != null && !addr.getSubAdminArea().isEmpty()) {
+                        city = addr.getSubAdminArea();
+                    } else if (addr.getAdminArea() != null && !addr.getAdminArea().isEmpty()) {
+                        city = addr.getAdminArea();
+                    }
 
-        final String cityName = city;
-        runOnUiThread(() -> {
-            String js = String.format(Locale.US, "javascript:onNativeLocationReceived(%f, %f, '%s');", lat, lon, cityName);
-            webView.evaluateJavascript(js, null);
-        });
+                    if (addr.getSubLocality() != null && !addr.getSubLocality().isEmpty()) {
+                        locality = addr.getSubLocality();
+                    } else if (addr.getThoroughfare() != null && !addr.getThoroughfare().isEmpty()) {
+                        locality = addr.getThoroughfare();
+                    } else if (addr.getFeatureName() != null && !addr.getFeatureName().isEmpty()) {
+                        locality = addr.getFeatureName();
+                    }
+
+                    if (addr.getMaxAddressLineIndex() >= 0) {
+                        fullAddress = addr.getAddressLine(0);
+                    }
+                }
+            } catch (Exception ignored) {}
+
+            if (locality == null || locality.isEmpty()) {
+                locality = city;
+            }
+            if (fullAddress == null || fullAddress.isEmpty()) {
+                fullAddress = locality.equals(city) ? city : (locality + ", " + city);
+            }
+
+            final String finalCity = escapeJs(city);
+            final String finalLocality = escapeJs(locality);
+            final String finalAddress = escapeJs(fullAddress);
+
+            runOnUiThread(() -> {
+                String js = String.format(Locale.US, "javascript:if(window.onNativeLocationReceived){window.onNativeLocationReceived(%f, %f, '%s', '%s', '%s');}", lat, lon, finalCity, finalLocality, finalAddress);
+                webView.evaluateJavascript(js, null);
+            });
+        }).start();
+    }
+
+    private String escapeJs(String str) {
+        if (str == null) return "";
+        return str.replace("\\", "\\\\")
+                  .replace("'", "\\'")
+                  .replace("\"", "\\\"")
+                  .replace("\n", " ")
+                  .replace("\r", "");
     }
 
     private void notifyLocationDenied(String reason) {
