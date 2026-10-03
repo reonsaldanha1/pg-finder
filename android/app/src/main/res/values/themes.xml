@@ -1,8 +1,10 @@
 <resources>
     <style name="Theme.PGFinder" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">#F47920</item>
-        <item name="colorPrimaryVariant">#D35400</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="android:statusBarColor">#F47920</item>
+        <item name="colorPrimary">#00D2FF</item>
+        <item name="colorPrimaryVariant">#0077FF</item>
+        <item name="colorOnPrimary">#000000</item>
+        <item name="android:statusBarColor">#000000</item>
+        <item name="android:navigationBarColor">#000000</item>
+        <item name="android:windowBackground">#000000</item>
     </style>
 </resources>
