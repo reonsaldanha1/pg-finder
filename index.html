@@ -1564,16 +1564,16 @@
               </svg>
             </div>
             <select class="city-select" id="citySelect">
+              <option selected>Bengaluru</option>
               <option>Gurugram</option>
               <option>Delhi</option>
               <option>Noida</option>
-              <option>Bengaluru</option>
               <option>Mumbai</option>
               <option>Pune</option>
               <option>Hyderabad</option>
             </select>
             <div class="divider-v"></div>
-            <input class="locality-input" type="text" placeholder="Locality in Gurugram..." id="localityInput" />
+            <input class="locality-input" type="text" placeholder="Mathikere / Ramaiah Institute..." id="localityInput" />
             <button type="button" onclick="requestLocation()" title="Use Current Location" style="background:none; border:none; padding:4px 6px; cursor:pointer; display:flex; align-items:center; justify-content:center;">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--accent-main)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="3 11 22 2 13 21 11 13 3 11"/>
@@ -1900,7 +1900,7 @@
           </select>
         </div>
         <div class="locality-search-input-wrap">
-          <input type="text" id="searchLocalityInput" placeholder="Locality in Bengaluru..." oninput="doSearchPageQuery()" onkeydown="if(event.key==='Enter') doSearchPageQuery();" />
+          <input type="text" id="searchLocalityInput" placeholder="Locality near Ramaiah / Mathikere..." oninput="doSearchPageQuery()" onkeydown="if(event.key==='Enter') doSearchPageQuery();" />
           <button type="button" onclick="requestLocation()" title="Use Current Location" style="background:none; border:none; padding:4px; cursor:pointer; display:flex; align-items:center; justify-content:center;">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--accent-main)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <polygon points="3 11 22 2 13 21 11 13 3 11"/>
@@ -2380,26 +2380,209 @@
 </div><!-- /phone-frame -->
 
 <script>
-// ── Data ──────────────────────────────────────────────────
+// ── Data (Featuring Top PGs near Ramaiah Institute of Technology, Bengaluru & Major Hubs) ──
 const boysData = [
-  { name: "Royal PG Sector 17", loc: "Sector 17, Gurugram", rating: "5.0", price: "₹7,500 – ₹15,000", amenities: ["First Aid Kit","Power-Back Up"], badge:"Boys", badgeClass:"badge-boys", img:"https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=300&q=70" },
-  { name: "Sakshi Boys PG", loc: "Sector 14, Gurugram", rating: "4.8", price: "₹7,500 – ₹12,000", amenities: ["Wi-Fi","Power-Back Up"], badge:"Boys", badgeClass:"badge-boys", img:"https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5?w=300&q=70" },
-  { name: "GreenLeaf PG", loc: "Sector 49, Gurugram", rating: "4.6", price: "₹6,000 – ₹11,000", amenities: ["Meals","Wi-Fi"], badge:"Boys", badgeClass:"badge-boys", img:"https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=300&q=70" },
+  {
+    name: "Dennis Boys Hostel (Ramaiah Campus)",
+    loc: "5th Main Rd, Mathikere, Bengaluru (0.4 km from MSRIT)",
+    rating: "4.8",
+    price: "₹7,500 – ₹13,000",
+    amenities: ["Food Included", "High-speed Wi-Fi", "Daily Cleaning", "Hot Water"],
+    badge: "Boys",
+    badgeClass: "badge-boys",
+    verified: true,
+    distanceKm: 0.4,
+    img: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=500&q=80"
+  },
+  {
+    name: "Chaithanya Boys PG (Near Back Gate)",
+    loc: "Opp MSRIT Back Gate, Mathikere, Bengaluru (0.3 km)",
+    rating: "4.7",
+    price: "₹8,000 – ₹14,000",
+    amenities: ["3 Times South/North Food", "Power Backup", "Wi-Fi", "CCTV 24/7"],
+    badge: "Boys",
+    badgeClass: "badge-boys",
+    verified: true,
+    distanceKm: 0.3,
+    img: "https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5?w=500&q=80"
+  },
+  {
+    name: "Royal Mens Luxury PG",
+    loc: "1st Main Rd, Yeshwanthpur, Bengaluru (1.8 km from MSRIT)",
+    rating: "4.6",
+    price: "₹7,000 – ₹12,500",
+    amenities: ["Attached Bathrooms", "Wi-Fi", "Washing Machine", "Two-Wheeler Parking"],
+    badge: "Boys",
+    badgeClass: "badge-boys",
+    verified: true,
+    distanceKm: 1.8,
+    img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=500&q=80"
+  },
+  {
+    name: "Punyaha Gents PG & Hostel",
+    loc: "New BEL Road, RMV 2nd Stage, Bengaluru (1.2 km from MSRIT)",
+    rating: "4.9",
+    price: "₹8,500 – ₹15,000",
+    amenities: ["AC Available", "High-speed Wi-Fi", "North/South Homely Food"],
+    badge: "Boys",
+    badgeClass: "badge-boys",
+    verified: true,
+    distanceKm: 1.2,
+    img: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?w=500&q=80"
+  }
 ];
+
 const girlsData = [
-  { name: "Royal Girls PG", loc: "Sector 69, Gurugram", rating: "4.9", price: "₹12,000 – ₹20,000", amenities: ["Power-Back Up","Wi-Fi"], badge:"Girls", badgeClass:"badge-girls", img:"https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=300&q=70" },
-  { name: "Bharat Girls PG", loc: "Sector 58, Gurugram", rating: "4.7", price: "₹8,500 – ₹16,000", amenities: ["Power-Back Up","Lift"], badge:"Girls", badgeClass:"badge-girls", img:"https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=300&q=70" },
-  { name: "Pink Nest PG", loc: "Sector 45, Gurugram", rating: "4.5", price: "₹9,000 – ₹14,000", amenities: ["Meals","Wi-Fi"], badge:"Girls", badgeClass:"badge-girls", img:"https://images.unsplash.com/photo-1484154218962-a197022b5858?w=300&q=70" },
+  {
+    name: "Zolo Hermes Luxury Ladies PG",
+    loc: "MSR College Rd, Mathikere, Bengaluru (0.6 km from MSRIT)",
+    rating: "4.9",
+    price: "₹9,500 – ₹18,000",
+    amenities: ["Biometric Entry", "Air Conditioning", "Wi-Fi", "Hygienic Meals"],
+    badge: "Girls",
+    badgeClass: "badge-girls",
+    verified: true,
+    distanceKm: 0.6,
+    img: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=500&q=80"
+  },
+  {
+    name: "Adler Stays for Women",
+    loc: "8th Cross, Mathikere, Bengaluru (0.5 km from MSRIT)",
+    rating: "4.8",
+    price: "₹9,000 – ₹16,500",
+    amenities: ["Spacious Balcony", "Rooftop Dining", "Housekeeping", "Study Desks"],
+    badge: "Girls",
+    badgeClass: "badge-girls",
+    verified: true,
+    distanceKm: 0.5,
+    img: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=500&q=80"
+  },
+  {
+    name: "Bella Stays Premium Girls PG",
+    loc: "Sanjay Nagar Main Road, Bengaluru (2.5 km from MSRIT)",
+    rating: "4.9",
+    price: "₹10,500 – ₹19,000",
+    amenities: ["3-Tier Security", "Laundry Service", "Chef Prepared Meals", "Power Backup"],
+    badge: "Girls",
+    badgeClass: "badge-girls",
+    verified: true,
+    distanceKm: 2.5,
+    img: "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=500&q=80"
+  },
+  {
+    name: "Sri Sai Luxurious Ladies PG",
+    loc: "Near MS Ramaiah Hospital, MSR Nagar, Bengaluru (0.8 km)",
+    rating: "4.7",
+    price: "₹8,000 – ₹14,500",
+    amenities: ["Meals 3 Times", "Wi-Fi", "RO Water", "24/7 Hot Water"],
+    badge: "Girls",
+    badgeClass: "badge-girls",
+    verified: true,
+    distanceKm: 0.8,
+    img: "https://images.unsplash.com/photo-1540518614846-7ede433c4ef7?w=500&q=80"
+  }
 ];
+
 const colivingData = [
-  { name: "OM Sai Ram PG", loc: "Sector 28, Gurugram", rating: "4.8", price: "₹12,000 – ₹23,000", amenities: ["Power-Back Up","Wi-Fi","Lift"], badge:"Co-living", badgeClass:"badge-coliving", verified:true, img:"https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&q=70" },
-  { name: "Stay Residency", loc: "Sector 32, Gurugram", rating: "4.7", price: "₹12,500 – ₹22,000", amenities: ["Power-Back Up","Lift"], badge:"Co-living", badgeClass:"badge-coliving", verified:true, img:"https://images.unsplash.com/photo-1513694203232-719a280e022f?w=300&q=70" },
-  { name: "Nest Co-Living", loc: "Sector 40, Gurugram", rating: "4.9", price: "₹14,000 – ₹25,000", amenities: ["Wi-Fi","Meals","Power-Back Up"], badge:"Co-living", badgeClass:"badge-coliving", img:"https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=300&q=70" },
+  {
+    name: "Stanza Living Cologne House",
+    loc: "Near Ramaiah Gate, Mathikere, Bengaluru (0.7 km from MSRIT)",
+    rating: "4.9",
+    price: "₹12,000 – ₹24,000",
+    amenities: ["App-based Smart Services", "Gaming Lounge", "High-speed Wi-Fi", "Chef Food"],
+    badge: "Co-living",
+    badgeClass: "badge-coliving",
+    verified: true,
+    distanceKm: 0.7,
+    img: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=500&q=80"
+  },
+  {
+    name: "Zolo Skylon Modern Coliving",
+    loc: "Ashwath Nagar, RMV 2nd Stage, Bengaluru (1.5 km from MSRIT)",
+    rating: "4.8",
+    price: "₹11,500 – ₹22,000",
+    amenities: ["Power Backup", "Wi-Fi", "Refrigerator & Microwave", "Daily Housekeeping"],
+    badge: "Co-living",
+    badgeClass: "badge-coliving",
+    verified: true,
+    distanceKm: 1.5,
+    img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=500&q=80"
+  },
+  {
+    name: "Zolo Platinum City Luxury Coliving",
+    loc: "Next to Metro Station, Yeshwanthpur, Bengaluru (2.8 km from MSRIT)",
+    rating: "4.8",
+    price: "₹13,000 – ₹25,000",
+    amenities: ["Swimming Pool", "Gym Access", "Clubhouse", "High-speed Internet"],
+    badge: "Co-living",
+    badgeClass: "badge-coliving",
+    verified: true,
+    distanceKm: 2.8,
+    img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&q=80"
+  },
+  {
+    name: "Nest Co-Living RMV Stage 2",
+    loc: "Near BEL Circle, Jalahalli, Bengaluru (3.4 km from MSRIT)",
+    rating: "4.7",
+    price: "₹10,000 – ₹19,000",
+    amenities: ["Power Backup", "Wi-Fi", "Food Included", "Lift"],
+    badge: "Co-living",
+    badgeClass: "badge-coliving",
+    verified: true,
+    distanceKm: 3.4,
+    img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=500&q=80"
+  }
 ];
+
 const flatsData = [
-  { name: "1 RK Furnished Flat", loc: "Sector 23, Gurugram", rating: "4.5", price: "₹11,000 – ₹15,000", amenities: ["Wi-Fi","Verified"], badge:"1 RK", badgeClass:"badge-boys", img:"https://images.unsplash.com/photo-1522156373667-4c7234bbd804?w=300&q=70" },
-  { name: "1 BHK Modern Flat", loc: "Sector 56, Gurugram", rating: "4.7", price: "₹18,000 – ₹24,000", amenities: ["Verified","Parking"], badge:"1 BHK", badgeClass:"badge-coliving", img:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=300&q=70" },
-  { name: "2 BHK Premium Flat", loc: "DLF Phase 4, Gurugram", rating: "4.8", price: "₹28,000 – ₹35,000", amenities: ["Lift","Parking","Wi-Fi"], badge:"2 BHK", badgeClass:"badge-girls", img:"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&q=70" },
+  {
+    name: "1 RK Studio Flat (Furnished)",
+    loc: "Mathikere Main Road, Bengaluru (0.5 km from MSRIT)",
+    rating: "4.7",
+    price: "₹12,000 – ₹16,000",
+    amenities: ["Full Kitchen Setup", "Attached Bathroom", "Wi-Fi", "Gated Security"],
+    badge: "1 RK",
+    badgeClass: "badge-boys",
+    verified: true,
+    distanceKm: 0.5,
+    img: "https://images.unsplash.com/photo-1522156373667-4c7234bbd804?w=500&q=80"
+  },
+  {
+    name: "1 BHK Modern Student Apartment",
+    loc: "New BEL Road, RMV 2nd Stage, Bengaluru (1.3 km from MSRIT)",
+    rating: "4.8",
+    price: "₹18,000 – ₹25,000",
+    amenities: ["Covered Car/Bike Parking", "Lift", "Power Backup", "Modular Kitchen"],
+    badge: "1 BHK",
+    badgeClass: "badge-coliving",
+    verified: true,
+    distanceKm: 1.3,
+    img: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=500&q=80"
+  },
+  {
+    name: "2 BHK Premium Shared Flat",
+    loc: "Sanjay Nagar, RMV Extension, Bengaluru (2.2 km from MSRIT)",
+    rating: "4.9",
+    price: "₹26,000 – ₹34,000",
+    amenities: ["Spacious Balcony", "Power Backup", "Lift", "24/7 Security"],
+    badge: "2 BHK",
+    badgeClass: "badge-girls",
+    verified: true,
+    distanceKm: 2.2,
+    img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500&q=80"
+  },
+  {
+    name: "2 BHK Executive Flat near Metro",
+    loc: "Yeshwanthpur Industrial Area Rd, Bengaluru (2.6 km from MSRIT)",
+    rating: "4.8",
+    price: "₹28,000 – ₹36,000",
+    amenities: ["Metro Connectivity (5 mins)", "Gym", "Clubhouse", "Security"],
+    badge: "2 BHK",
+    badgeClass: "badge-boys",
+    verified: true,
+    distanceKm: 2.6,
+    img: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&q=80"
+  }
 ];
 
 function buildCard(d) {
@@ -2425,6 +2608,7 @@ function buildCard(d) {
           <circle cx="12" cy="9" r="2.5"/>
         </svg>
         ${d.loc}
+        ${d.distanceKm !== undefined ? `<span style="margin-left:6px; background:rgba(0,210,255,0.15); color:var(--accent-main); font-weight:700; font-size:10px; padding:1px 6px; border-radius:6px;">📍 ${d.distanceKm} km</span>` : ''}
       </div>
       <div class="pg-rating">
         <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -2589,13 +2773,29 @@ function setOrAddCityOption(selectElement, cityName) {
   }
 }
 
-// ── Realistic Localized Listings Provider ──
+// ── Realistic Localized Listings Provider (Within 20 km of Ramaiah Institute of Technology) ──
 function getListingsForLocation(city, locality, isPG) {
-  const cleanLoc = locality || city || 'Nearby';
+  const cleanLoc = locality || city || 'Mathikere';
   const cleanCity = city || 'Bengaluru';
   const basePool = isPG ? [...boysData, ...girlsData, ...colivingData] : flatsData;
-  
-  // Try matching static records
+  const isRamaiahSearch = /ramaiah|msrit|mathikere|yeshwanthpur|sanjay|bel|sadashivanagar|malleshwaram|hebbal/i.test(cleanLoc) ||
+                          /bengaluru|bangalore/i.test(cleanCity);
+
+  // If searching around Ramaiah / Mathikere / Bengaluru, return the exact verified PGs around MSRIT within 20km
+  if (isRamaiahSearch) {
+    const matched = basePool.filter(item => {
+      if (!item.loc) return false;
+      const q = cleanLoc.toLowerCase();
+      return item.loc.toLowerCase().includes(q) || item.name.toLowerCase().includes(q) || /mathikere|msrit|ramaiah|bengaluru/i.test(item.loc);
+    });
+    if (matched.length > 0) {
+      // Sort by distance to Ramaiah Institute of Technology
+      return matched.sort((a, b) => (a.distanceKm || 99) - (b.distanceKm || 99));
+    }
+    return basePool;
+  }
+
+  // General text search across other locations
   const filtered = basePool.filter(item => {
     const locMatch = item.loc && (item.loc.toLowerCase().includes(cleanLoc.toLowerCase()) || cleanLoc.toLowerCase().includes(item.loc.toLowerCase()));
     const nameMatch = item.name && (item.name.toLowerCase().includes(cleanLoc.toLowerCase()) || cleanLoc.toLowerCase().includes(item.name.toLowerCase()));
