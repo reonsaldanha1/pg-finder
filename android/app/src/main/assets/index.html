@@ -31,32 +31,82 @@
       --nav-bg: #000000;
       --drawer-bg: #080A0E;
       --frame-shadow: 0 0 50px rgba(0, 210, 255, 0.12);
+
+      /* Icon & Badge Colors for Dark AMOLED */
+      --icon-box-bg: rgba(0, 210, 255, 0.1);
+      --icon-box-border: rgba(0, 210, 255, 0.25);
+      --icon-color: #00D2FF;
+
+      --banner-bg: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      --banner-icon-bg: rgba(0, 210, 255, 0.1);
+      --banner-icon-color: #00D2FF;
+
+      --cat-boys-bg: #0F172A;
+      --cat-boys-color: #60A5FA;
+      --cat-girls-bg: #1E1B4B;
+      --cat-girls-color: #C084FC;
+      --cat-coliving-bg: #064E3B;
+      --cat-coliving-color: #34D399;
+
+      --need-single-bg: linear-gradient(135deg, #0F172A, #020617);
+      --need-single-color: #00D2FF;
+      --need-parking-bg: linear-gradient(135deg, #1E293B, #0F172A);
+      --need-parking-color: #FBBF24;
+      --need-premium-bg: linear-gradient(135deg, #1E1B4B, #0F172A);
+      --need-premium-color: #A78BFA;
+      --need-lunch-bg: linear-gradient(135deg, #064E3B, #022C22);
+      --need-lunch-color: #34D399;
     }
     
     body.theme-light {
       /* Fresh Modern Light Palette */
-      --app-bg: #F4F6F9;
+      --app-bg: #F8FAFC;
       --app-card: #FFFFFF;
-      --app-card-elevated: #F8FAFC;
+      --app-card-elevated: #F1F5F9;
       --app-border: #E2E8F0;
       --app-border-light: #CBD5E1;
-      --app-hero-bg: linear-gradient(180deg, #0F172A 0%, #1E293B 100%);
-      --app-loc-screen-bg: radial-gradient(circle at 50% 20%, #F1F5F9 0%, #E2E8F0 100%);
+      --app-hero-bg: linear-gradient(180deg, #E0F2FE 0%, #F8FAFC 100%);
+      --app-loc-screen-bg: radial-gradient(circle at 50% 20%, #F0F9FF 0%, #E2E8F0 100%);
       
-      /* Accents */
+      /* Accents - Bright, vibrant & cheerful */
       --accent-main: #0284C7;
-      --accent-gradient: linear-gradient(135deg, #0284C7 0%, #2563EB 100%);
-      --accent-glow: rgba(2, 132, 199, 0.15);
+      --accent-gradient: linear-gradient(135deg, #38BDF8 0%, #0284C7 100%);
+      --accent-glow: rgba(56, 189, 248, 0.2);
       --accent-badge-text: #FFFFFF;
       
       /* Typography */
       --text-primary: #0F172A;
       --text-secondary: #475569;
-      --text-muted: #94A3B8;
+      --text-muted: #64748B;
       --input-bg: #FFFFFF;
       --nav-bg: #FFFFFF;
       --drawer-bg: #FFFFFF;
-      --frame-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      --frame-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+
+      /* Dedicated Light-themed Icon and Badge Colors */
+      --icon-box-bg: #E0F2FE;
+      --icon-box-border: #BAE6FD;
+      --icon-color: #0284C7;
+      
+      --banner-bg: linear-gradient(135deg, #E0F2FE 0%, #F0F9FF 100%);
+      --banner-icon-bg: #BAE6FD;
+      --banner-icon-color: #0284C7;
+      
+      --cat-boys-bg: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%);
+      --cat-boys-color: #1D4ED8;
+      --cat-girls-bg: linear-gradient(135deg, #F3E8FF 0%, #E9D5FF 100%);
+      --cat-girls-color: #7E22CE;
+      --cat-coliving-bg: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
+      --cat-coliving-color: #047857;
+
+      --need-single-bg: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%);
+      --need-single-color: #0369A1;
+      --need-parking-bg: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+      --need-parking-color: #B45309;
+      --need-premium-bg: linear-gradient(135deg, #EDE9FE 0%, #DDD6FE 100%);
+      --need-premium-color: #6D28D9;
+      --need-lunch-bg: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+      --need-lunch-color: #B91C1C;
     }
     
     html, body {
@@ -140,10 +190,10 @@
     .loc-bullet:last-child { margin-bottom: 0; }
     .loc-bullet-icon {
       width: 34px; height: 34px; border-radius: 8px;
-      background: rgba(0, 210, 255, 0.1); border: 1px solid rgba(0, 210, 255, 0.2);
+      background: var(--icon-box-bg); border: 1px solid var(--icon-box-border);
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .loc-bullet-icon svg { width: 18px; height: 18px; stroke: var(--accent-main); }
+    .loc-bullet-icon svg { width: 18px; height: 18px; stroke: var(--icon-color); }
     .loc-bullet-text strong { display: block; font-size: 13px; color: var(--text-primary); font-weight: 600; }
     .loc-bullet-text span  { font-size: 11px; color: var(--text-secondary); }
 
@@ -235,10 +285,10 @@
     .section-title { display: flex; align-items: center; gap: 10px; }
     .section-icon {
       width: 32px; height: 32px; border-radius: 8px;
-      background: var(--app-card-elevated); border: 1px solid var(--app-border);
+      background: var(--icon-box-bg); border: 1px solid var(--icon-box-border);
       display: flex; align-items: center; justify-content: center;
     }
-    .section-icon svg { width: 16px; height: 16px; stroke: var(--accent-main); }
+    .section-icon svg { width: 16px; height: 16px; stroke: var(--icon-color); }
     .section-title h3 { font-size: 16px; font-weight: 700; color: #FFFFFF; }
     .see-all { font-size: 13px; color: var(--accent-main); font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 2px; }
 
@@ -312,12 +362,12 @@
 
     /* Banner – Own a PG */
     .own-banner {
-      margin: 12px 16px; background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      margin: 12px 16px; background: var(--banner-bg);
       border: 1px solid var(--app-border); border-radius: 14px; padding: 14px 16px;
       display: flex; align-items: center; gap: 14px; cursor: pointer;
     }
-    .own-icon { width: 40px; height: 40px; background: rgba(0, 210, 255, 0.1); border: 1px solid rgba(0, 210, 255, 0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .own-icon svg { width: 20px; height: 20px; stroke: var(--accent-main); }
+    .own-icon { width: 40px; height: 40px; background: var(--banner-icon-bg); border: 1px solid var(--icon-box-border); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .own-icon svg { width: 20px; height: 20px; stroke: var(--banner-icon-color); }
     .own-text { flex: 1; }
     .own-text strong { display: block; color: #FFFFFF; font-size: 14px; font-weight: 700; }
     .own-text span   { color: var(--text-secondary); font-size: 11px; }
@@ -350,11 +400,11 @@
     .hiw-row { display: flex; align-items: flex-start; justify-content: center; gap: 8px; margin-top: 6px; }
     .hiw-step { display: flex; flex-direction: column; align-items: center; text-align: center; flex: 1; }
     .hiw-icon-wrap {
-      position: relative; width: 52px; height: 52px; background: var(--app-card);
-      border: 1px solid var(--app-border); border-radius: 14px;
+      position: relative; width: 52px; height: 52px; background: var(--icon-box-bg);
+      border: 1px solid var(--icon-box-border); border-radius: 14px;
       display: flex; align-items: center; justify-content: center; margin-bottom: 8px;
     }
-    .hiw-icon-wrap svg { width: 22px; height: 22px; stroke: var(--accent-main); }
+    .hiw-icon-wrap svg { width: 22px; height: 22px; stroke: var(--icon-color); }
     .hiw-badge {
       position: absolute; top: -5px; right: -5px; width: 18px; height: 18px;
       background: var(--accent-main); border-radius: 50%; display: flex;
@@ -370,11 +420,11 @@
       border-radius: 14px; padding: 14px; display: flex; align-items: center; gap: 14px;
     }
     .support-icon {
-      width: 46px; height: 46px; background: rgba(0, 210, 255, 0.1);
-      border: 1px solid rgba(0, 210, 255, 0.2); border-radius: 12px;
+      width: 46px; height: 46px; background: var(--icon-box-bg);
+      border: 1px solid var(--icon-box-border); border-radius: 12px;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .support-icon svg { width: 24px; height: 24px; stroke: var(--accent-main); }
+    .support-icon svg { width: 24px; height: 24px; stroke: var(--icon-color); }
     .support-text strong { display: block; font-size: 13px; font-weight: 700; color: #FFFFFF; margin-bottom: 2px; }
     .support-text p { font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
 
@@ -458,12 +508,31 @@
       background: var(--app-card); border: 1px solid var(--app-border);
       border-radius: 12px; padding: 14px 12px; text-align: center;
     }
-    .trust-card-icon { width: 32px; height: 32px; margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; }
-    .trust-card-icon svg { width: 24px; height: 24px; stroke: var(--accent-main); }
+    .trust-card-icon { width: 36px; height: 36px; margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; background: var(--icon-box-bg); border-radius: 10px; border: 1px solid var(--icon-box-border); }
+    .trust-card-icon svg { width: 20px; height: 20px; stroke: var(--icon-color); }
     .trust-card strong { display: block; font-size: 12px; color: #FFFFFF; margin-top: 4px; }
     .trust-card p { font-size: 10px; color: var(--text-secondary); margin-top: 2px; }
 
     * { scrollbar-width: none; }
+
+    body.theme-light .hero h2 { color: #0F172A; }
+    body.theme-light .section-title h3 { color: #0F172A; }
+    body.theme-light .city-select { color: #0F172A; }
+    body.theme-light .city-select option { background: #FFFFFF; color: #0F172A; }
+    body.theme-light .pg-name { color: #0F172A; }
+    body.theme-light .pg-price span { color: #0F172A; }
+    body.theme-light .support-text strong { color: #0F172A; }
+    body.theme-light .hiw-step strong { color: #0F172A; }
+    body.theme-light .trust-card strong { color: #0F172A; }
+    body.theme-light .drawer-item-text strong { color: #0F172A; }
+    body.theme-light .own-text strong { color: #0F172A; }
+    body.theme-light .search-card { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06); }
+    body.theme-light .btn-allow { color: #FFFFFF; }
+    body.theme-light .btn-search { color: #FFFFFF; }
+    body.theme-light .btn-search svg { stroke: #FFFFFF; }
+    body.theme-light .btn-view { color: #FFFFFF; }
+    body.theme-light .hiw-badge { color: #FFFFFF; }
+
   </style>
 </head>
 <body>
@@ -776,16 +845,16 @@
       <!-- PG Categories -->
       <div class="section" style="padding-top:10px;">
         <div class="cat-row">
-          <div class="cat-card" style="background:#0F172A;" onclick="filterCategory('boys')">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
+          <div class="cat-card" style="background:var(--cat-boys-bg);" onclick="filterCategory('boys')">
+            <svg style="stroke:var(--cat-boys-color); opacity: 0.9;" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
             <div class="cat-label">→ PG For Boys</div>
           </div>
-          <div class="cat-card" style="background:#1E1B4B;" onclick="filterCategory('girls')">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 1 5 5c0 2.3-1.5 4.3-3.6 4.9v2.1h2a1 1 0 0 1 0 2h-2v4a1 1 0 0 1-2 0v-4h-2a1 1 0 0 1 0-2h2v-2.1C9.5 11.3 8 9.3 8 7a5 5 0 0 1 4-5z"/></svg>
+          <div class="cat-card" style="background:var(--cat-girls-bg);" onclick="filterCategory('girls')">
+            <svg style="stroke:var(--cat-girls-color); opacity: 0.9;" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 1 5 5c0 2.3-1.5 4.3-3.6 4.9v2.1h2a1 1 0 0 1 0 2h-2v4a1 1 0 0 1-2 0v-4h-2a1 1 0 0 1 0-2h2v-2.1C9.5 11.3 8 9.3 8 7a5 5 0 0 1 4-5z"/></svg>
             <div class="cat-label">→ PG For Girls</div>
           </div>
-          <div class="cat-card" style="background:#064E3B;" onclick="filterCategory('coliving')">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <div class="cat-card" style="background:var(--cat-coliving-bg);" onclick="filterCategory('coliving')">
+            <svg style="stroke:var(--cat-coliving-color); opacity: 0.9;" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             <div class="cat-label">→ Co-Living</div>
           </div>
         </div>
@@ -899,27 +968,27 @@
       <div class="section">
         <h3 style="font-size:16px;font-weight:700;color:#FFFFFF;margin-bottom:14px;">Find PGs Based on your need</h3>
         <div class="need-grid">
-          <div class="need-card" style="background:linear-gradient(135deg,#0F172A,#020617);">
+          <div class="need-card" style="background:var(--need-single-bg);">
             <div class="need-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
+              <svg style="stroke:var(--need-single-color);" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
             </div>
             <span class="need-label">Single Bed</span>
           </div>
-          <div class="need-card" style="background:linear-gradient(135deg,#1E293B,#0F172A);">
+          <div class="need-card" style="background:var(--need-parking-bg);">
             <div class="need-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="8" rx="2"/><path d="M5 11l1.5-4.5a2 2 0 0 1 1.9-1.5h7.2a2 2 0 0 1 1.9 1.5L19 11"/><circle cx="7.5" cy="16.5" r="1.5"/><circle cx="16.5" cy="16.5" r="1.5"/></svg>
+              <svg style="stroke:var(--need-parking-color);" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="8" rx="2"/><path d="M5 11l1.5-4.5a2 2 0 0 1 1.9-1.5h7.2a2 2 0 0 1 1.9 1.5L19 11"/><circle cx="7.5" cy="16.5" r="1.5"/><circle cx="16.5" cy="16.5" r="1.5"/></svg>
             </div>
             <span class="need-label">Car Parking</span>
           </div>
-          <div class="need-card" style="background:linear-gradient(135deg,#1E1B4B,#0F172A);">
+          <div class="need-card" style="background:var(--need-premium-bg);">
             <div class="need-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <svg style="stroke:var(--need-premium-color); fill:none;" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             </div>
             <span class="need-label">Premium PG</span>
           </div>
-          <div class="need-card" style="background:linear-gradient(135deg,#064E3B,#022C22);">
+          <div class="need-card" style="background:var(--need-lunch-bg);">
             <div class="need-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+              <svg style="stroke:var(--need-lunch-color);" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
             </div>
             <span class="need-label">Lunch Included</span>
           </div>
