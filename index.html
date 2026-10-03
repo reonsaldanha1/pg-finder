@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>PGdekho – Your Accommodation Partner</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange: #F47920;
+      --orange-light: #FFF0E6;
+      --blue: #3B7DD8;
+      --blue-light: #EAF1FB;
+      --text: #1A1A1A;
+      --sub: #666;
+      --border: #E8E8E8;
+      --bg: #F6F7FB;
+      --white: #ffffff;
+      --green: #27AE60;
+      --purple: #7B2D8B;
+      --card-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    html, body { height: 100%; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #e0e0e0; }
+
+    /* ── Phone Frame ── */
+    .phone-frame {
+      width: 390px; max-width: 100%; height: 844px; max-height: 100dvh;
+      margin: 0 auto; background: var(--bg); overflow: hidden;
+      position: relative; display: flex; flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    @media (max-width: 420px) { .phone-frame { width: 100%; height: 100dvh; border-radius: 0; } }
+
+    /* ── Overlay screens ── */
+    .screen { display: none; flex-direction: column; height: 100%; width: 100%; }
+    .screen.active { display: flex; }
+
+    /* ════════════════════════════
+       LOCATION PERMISSION SCREEN
+    ════════════════════════════ */
+    #screen-location {
+      background: linear-gradient(160deg, #fff 60%, #FFF0E6 100%);
+      align-items: center; justify-content: center; text-align: center; padding: 40px 30px;
+    }
+    .loc-icon-wrap {
+      width: 110px; height: 110px; border-radius: 50%;
+      background: var(--orange-light); display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 28px; animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(244,121,32,0.3); }
+      50%      { box-shadow: 0 0 0 18px rgba(244,121,32,0); }
+    }
+    .loc-icon-wrap svg { width: 54px; height: 54px; }
+    #screen-location h1 { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 12px; }
+    #screen-location p  { font-size: 14px; color: var(--sub); line-height: 1.6; margin-bottom: 36px; }
+    .btn-allow {
+      width: 100%; padding: 16px; border-radius: 12px; border: none; cursor: pointer;
+      background: var(--orange); color: #fff; font-size: 16px; font-weight: 700;
+      margin-bottom: 14px; transition: opacity .2s;
+    }
+    .btn-allow:hover { opacity: .88; }
+    .btn-skip {
+      background: none; border: 2px solid var(--border); color: var(--sub);
+      width: 100%; padding: 14px; border-radius: 12px; font-size: 15px; cursor: pointer;
+    }
+    .loc-bullets { text-align: left; background: var(--white); border-radius: 14px; padding: 18px 20px; margin-bottom: 28px; box-shadow: var(--card-shadow); }
+    .loc-bullet { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+    .loc-bullet:last-child { margin-bottom: 0; }
+    .loc-bullet-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .loc-bullet-text strong { display: block; font-size: 13px; color: var(--text); font-weight: 600; }
+    .loc-bullet-text span  { font-size: 12px; color: var(--sub); }
+
+    /* ════════════════════════════
+       MAIN APP SHELL
+    ════════════════════════════ */
+    #screen-main { position: relative; overflow: hidden; }
+
+    /* Top Navbar */
+    .navbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px; background: var(--white); z-index: 100;
+      border-bottom: 1px solid var(--border); flex-shrink: 0;
+    }
+    .navbar-logo { display: flex; align-items: center; gap: 6px; }
+    .logo-pg { background: var(--orange); color: #fff; font-weight: 900; font-size: 18px; padding: 3px 7px; border-radius: 6px; }
+    .logo-text { font-size: 20px; font-weight: 800; color: var(--text); }
+    .logo-sub { font-size: 9px; color: var(--sub); display: block; letter-spacing: .3px; }
+    .navbar-icons { display: flex; gap: 14px; align-items: center; }
+    .icon-btn { width: 36px; height: 36px; border: none; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
+    .icon-btn:hover { background: var(--bg); }
+
+    /* Page scroll area */
+    .page-content { flex: 1; overflow-y: auto; scroll-behavior: smooth; }
+    .page-content::-webkit-scrollbar { width: 0; }
+
+    /* Orange hero banner */
+    .hero {
+      background: var(--orange); padding: 22px 18px 28px;
+    }
+    .hero h2 { color: #fff; font-size: 22px; font-weight: 700; text-align: center; margin-bottom: 18px; }
+    .search-card {
+      background: #fff; border-radius: 16px; padding: 14px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .tab-row { display: flex; gap: 8px; margin-bottom: 12px; }
+    .tab-btn {
+      flex: 1; padding: 10px; border-radius: 10px; border: none; cursor: pointer;
+      font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: all .2s;
+    }
+    .tab-btn.active { background: var(--orange); color: #fff; }
+    .tab-btn:not(.active) { background: #F0F0F0; color: var(--sub); }
+    .location-row { display: flex; align-items: center; border: 1.5px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; gap: 8px; }
+    .location-pin { color: var(--orange); font-size: 16px; }
+    .city-select { background: none; border: none; font-size: 14px; font-weight: 600; cursor: pointer; outline: none; color: var(--text); padding-right: 4px; }
+    .divider-v { width: 1px; height: 18px; background: var(--border); }
+    .locality-input { flex: 1; border: none; outline: none; font-size: 13px; color: var(--sub); background: none; }
+    .btn-search {
+      width: 100%; padding: 13px; border-radius: 10px; border: none;
+      background: var(--orange); color: #fff; font-size: 15px; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+
+    /* Section blocks */
+    .section { padding: 18px; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .section-title { display: flex; align-items: center; gap: 10px; }
+    .section-icon { width: 34px; height: 34px; border-radius: 8px; background: var(--blue-light); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .section-title h3 { font-size: 16px; font-weight: 700; color: var(--text); }
+    .see-all { font-size: 13px; color: var(--blue); font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 2px; }
+
+    /* City chips */
+    .city-chips { display: flex; gap: 8px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 4px; }
+    .city-chips::-webkit-scrollbar { height: 0; }
+    .chip {
+      padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; cursor: pointer;
+      white-space: nowrap; border: 1.5px solid var(--border); background: #fff; color: var(--sub);
+      transition: all .15s;
+    }
+    .chip.active { background: var(--blue); color: #fff; border-color: var(--blue); font-weight: 600; }
+
+    /* Horizontal card scroll */
+    .cards-scroll { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 6px; }
+    .cards-scroll::-webkit-scrollbar { height: 0; }
+
+    /* PG Card */
+    .pg-card {
+      min-width: 210px; background: #fff; border-radius: 14px; overflow: hidden;
+      box-shadow: var(--card-shadow); flex-shrink: 0; cursor: pointer;
+    }
+    .pg-card-img { position: relative; height: 130px; background: #ddd; overflow: hidden; }
+    .pg-card-img img { width: 100%; height: 100%; object-fit: cover; }
+    .pg-badge {
+      position: absolute; top: 8px; left: 8px; padding: 3px 8px; border-radius: 6px;
+      font-size: 11px; font-weight: 700; color: #fff;
+    }
+    .badge-boys   { background: var(--blue); }
+    .badge-girls  { background: var(--purple); }
+    .badge-coliving { background: #6B21A8; }
+    .badge-verified { background: var(--green); }
+    .pg-heart {
+      position: absolute; top: 8px; right: 8px; width: 28px; height: 28px;
+      background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 14px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+    .pg-card-body { padding: 10px 12px 12px; }
+    .pg-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pg-loc  { font-size: 12px; color: var(--sub); display: flex; align-items: center; gap: 4px; margin-bottom: 6px; }
+    .pg-rating { font-size: 12px; color: #F4A820; font-weight: 700; margin-bottom: 6px; }
+    .pg-amenities { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+    .amenity {
+      border: 1px solid var(--orange); color: var(--orange); border-radius: 20px;
+      padding: 2px 8px; font-size: 10px; font-weight: 500; display: flex; align-items: center; gap: 3px;
+    }
+    .amenity.blue { border-color: var(--blue); color: var(--blue); }
+    .pg-price-row { display: flex; align-items: center; justify-content: space-between; }
+    .pg-price { font-size: 11px; color: var(--sub); }
+    .pg-price span { font-size: 13px; font-weight: 700; color: var(--text); }
+    .btn-view { background: var(--orange); color: #fff; border: none; border-radius: 8px; padding: 6px 12px; font-size: 11px; font-weight: 700; cursor: pointer; }
+
+    /* Banner – Own a PG */
+    .own-banner {
+      margin: 0 18px 4px; background: var(--blue); border-radius: 16px; padding: 16px 18px;
+      display: flex; align-items: center; gap: 14px; cursor: pointer;
+    }
+    .own-icon { width: 44px; height: 44px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+    .own-text { flex: 1; }
+    .own-text strong { display: block; color: #fff; font-size: 15px; font-weight: 700; }
+    .own-text span   { color: rgba(255,255,255,0.82); font-size: 12px; }
+    .own-arrow { width: 30px; height: 30px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; }
+
+    /* Category images row */
+    .cat-row { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; }
+    .cat-row::-webkit-scrollbar { height: 0; }
+    .cat-card {
+      min-width: 115px; height: 80px; border-radius: 12px; overflow: hidden; position: relative;
+      cursor: pointer; flex-shrink: 0;
+    }
+    .cat-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 60%); z-index: 1; }
+    .cat-card img { width: 100%; height: 100%; object-fit: cover; }
+    .cat-label { position: absolute; bottom: 8px; left: 8px; color: #fff; font-size: 12px; font-weight: 700; z-index: 2; display: flex; align-items: center; gap: 4px; }
+
+    /* Need-based grid */
+    .need-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .need-card {
+      height: 100px; border-radius: 14px; overflow: hidden; position: relative; cursor: pointer;
+    }
+    .need-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 60%); z-index: 1; }
+    .need-card img { width: 100%; height: 100%; object-fit: cover; }
+    .need-icon { position: absolute; top: 10px; right: 10px; z-index: 2; color: rgba(255,255,255,0.85); font-size: 18px; }
+    .need-label { position: absolute; bottom: 10px; left: 12px; color: #fff; font-size: 13px; font-weight: 700; z-index: 2; }
+
+    /* How it works */
+    .hiw-row { display: flex; align-items: flex-start; justify-content: center; gap: 10px; margin-top: 6px; }
+    .hiw-step { display: flex; flex-direction: column; align-items: center; text-align: center; flex: 1; }
+    .hiw-icon-wrap { position: relative; width: 56px; height: 56px; background: var(--blue-light); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 8px; }
+    .hiw-badge { position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; background: var(--orange); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; }
+    .hiw-connector { width: 36px; height: 2px; border-top: 2px dashed var(--orange); margin-top: 27px; flex-shrink: 0; }
+    .hiw-step strong { font-size: 13px; color: var(--text); font-weight: 700; display: block; margin-bottom: 3px; }
+    .hiw-step span { font-size: 11px; color: var(--sub); line-height: 1.4; }
+
+    /* 24/7 Support Banner */
+    .support-banner {
+      background: #fff; border-radius: 14px; padding: 16px; display: flex; align-items: center; gap: 16px;
+      box-shadow: var(--card-shadow);
+    }
+    .support-icon { width: 52px; height: 52px; background: var(--orange-light); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+    .support-text strong { display: block; font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .support-text p { font-size: 12px; color: var(--sub); line-height: 1.5; }
+
+    /* Dot indicators */
+    .dots { display: flex; justify-content: center; gap: 6px; padding: 12px 0 4px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+    .dot.active { background: var(--orange); width: 22px; border-radius: 4px; }
+
+    /* Bottom nav */
+    .bottom-nav {
+      display: flex; background: #fff; border-top: 1px solid var(--border);
+      flex-shrink: 0; z-index: 100; padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+    .nav-item { flex: 1; padding: 10px 0 8px; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; border: none; background: none; }
+    .nav-item span { font-size: 11px; color: var(--sub); font-weight: 500; }
+    .nav-item svg { width: 22px; height: 22px; stroke: var(--sub); fill: none; stroke-width: 1.8; }
+    .nav-item.active span { color: var(--orange); }
+    .nav-item.active svg { stroke: var(--orange); }
+
+    /* Drawer overlay */
+    .drawer-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; display: none; }
+    .drawer-overlay.open { display: block; }
+
+    /* Side Drawer */
+    .drawer {
+      position: absolute; top: 0; left: -320px; width: 300px; height: 100%;
+      background: #fff; z-index: 300; transition: left .3s ease;
+      display: flex; flex-direction: column; padding-bottom: 20px;
+    }
+    .drawer.open { left: 0; }
+    .drawer-header { padding: 20px 18px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+    .drawer-logo { display: flex; flex-direction: column; }
+    .drawer-close { width: 36px; height: 36px; border: 1.5px solid var(--border); border-radius: 8px; background: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--sub); }
+    .drawer-section-label { font-size: 11px; font-weight: 700; color: var(--sub); letter-spacing: 1px; text-transform: uppercase; padding: 14px 18px 8px; }
+    .drawer-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px; cursor: pointer; transition: background .15s;
+    }
+    .drawer-item:hover { background: var(--bg); }
+    .drawer-item-left { display: flex; align-items: center; gap: 14px; }
+    .drawer-item-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .di-orange { background: var(--orange-light); }
+    .di-blue   { background: var(--blue-light); }
+    .di-green  { background: #E8F8EF; }
+    .di-purple { background: #F3E8FF; }
+    .drawer-item-text strong { display: block; font-size: 14px; color: var(--text); font-weight: 600; }
+    .drawer-item-text span   { font-size: 12px; color: var(--sub); }
+    .drawer-arrow { color: var(--border); font-size: 18px; }
+    .drawer-badges { display: flex; gap: 8px; padding: 16px 18px 0; flex-wrap: wrap; }
+    .drawer-badge { border: 1.5px solid var(--border); border-radius: 20px; padding: 6px 14px; font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 5px; }
+    .drawer-footer { padding: 20px 18px 0; text-align: center; color: var(--sub); font-size: 12px; margin-top: auto; }
+
+    /* WhatsApp FAB */
+    .whatsapp-fab {
+      position: absolute; bottom: 76px; right: 14px; width: 50px; height: 50px;
+      background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 24px; cursor: pointer; box-shadow: 0 4px 12px rgba(37,211,102,0.4);
+      z-index: 150; text-decoration: none;
+    }
+
+    /* Location Toast */
+    .location-toast {
+      position: absolute; top: 70px; left: 18px; right: 18px;
+      background: #1A1A1A; color: #fff; border-radius: 12px; padding: 12px 16px;
+      font-size: 13px; z-index: 400; display: none; align-items: center; gap: 10px;
+    }
+    .location-toast.show { display: flex; animation: slideDown .3s ease; }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    .toast-icon { font-size: 20px; }
+    .toast-text strong { display: block; font-weight: 700; font-size: 13px; }
+    .toast-text span { font-size: 11px; color: rgba(255,255,255,0.7); }
+
+    /* Scrollbar hidden globally */
+    * { scrollbar-width: none; }
+  </style>
+</head>
+<body>
+<div class="phone-frame" id="app">
+
+  <!-- ══════════════════════════ LOCATION PERMISSION SCREEN ══════════════════════════ -->
+  <div id="screen-location" class="screen active">
+    <div style="text-align:center; margin-bottom:10px;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:6px;">
+        <span class="logo-pg">PG</span>
+        <div>
+          <span style="font-size:22px;font-weight:800;color:#1A1A1A;">dekho</span>
+          <span style="font-size:10px;color:#F47920;display:block;letter-spacing:.3px;margin-top:-3px;">Your Accommodation Partner</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="loc-icon-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#F47920" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+        <circle cx="12" cy="9" r="2.5"/>
+      </svg>
+    </div>
+
+    <h1>Allow Location Access</h1>
+    <p>To show PGs near you and provide accurate search results, we need access to your precise location.</p>
+
+    <div class="loc-bullets">
+      <div class="loc-bullet">
+        <span class="loc-bullet-icon">🏘️</span>
+        <div class="loc-bullet-text">
+          <strong>Find PGs Near You</strong>
+          <span>Discover verified PGs within your preferred locality</span>
+        </div>
+      </div>
+      <div class="loc-bullet">
+        <span class="loc-bullet-icon">📍</span>
+        <div class="loc-bullet-text">
+          <strong>Precise Recommendations</strong>
+          <span>Get listings sorted by walking/commute distance</span>
+        </div>
+      </div>
+      <div class="loc-bullet">
+        <span class="loc-bullet-icon">🔒</span>
+        <div class="loc-bullet-text">
+          <strong>Your Privacy is Safe</strong>
+          <span>We never share your location with property owners</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-allow" onclick="requestLocation()">
+      📍 &nbsp; Allow Precise Location
+    </button>
+    <button class="btn-skip" onclick="skipLocation()">
+      Not Now
+    </button>
+  </div>
+
+  <!-- ══════════════════════════ MAIN APP SCREEN ══════════════════════════ -->
+  <div id="screen-main" class="screen">
+
+    <!-- Location Toast -->
+    <div class="location-toast" id="locationToast">
+      <span class="toast-icon">📍</span>
+      <div class="toast-text">
+        <strong id="toastCity">Gurugram, Haryana</strong>
+        <span>Location detected successfully</span>
+      </div>
+    </div>
+
+    <!-- Drawer Overlay -->
+    <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+
+    <!-- Side Drawer -->
+    <div class="drawer" id="sideDrawer">
+      <div class="drawer-header">
+        <div class="drawer-logo">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span class="logo-pg" style="font-size:16px;padding:2px 6px;">PG</span>
+            <span style="font-size:18px;font-weight:800;color:#1A1A1A;">dekho</span>
+          </div>
+          <span style="font-size:10px;color:#F47920;margin-left:2px;">Your Accommodation Partner</span>
+        </div>
+        <button class="drawer-close" onclick="closeDrawer()">✕</button>
+      </div>
+
+      <div class="drawer-section-label">PROPERTY OWNER</div>
+      <div class="drawer-item">
+        <div class="drawer-item-left">
+          <div class="drawer-item-icon di-orange">🚪</div>
+          <div class="drawer-item-text">
+            <strong>Property Owner?</strong>
+            <span>Login to manage your leads</span>
+          </div>
+        </div>
+        <span class="drawer-arrow">›</span>
+      </div>
+
+      <div class="drawer-section-label">QUICK ACTIONS</div>
+      <div class="drawer-item">
+        <div class="drawer-item-left">
+          <div class="drawer-item-icon di-orange">🏠</div>
+          <div class="drawer-item-text">
+            <strong>Post a Property</strong>
+            <span>List your PG/room in minutes</span>
+          </div>
+        </div>
+        <span class="drawer-arrow">›</span>
+      </div>
+      <div class="drawer-item">
+        <div class="drawer-item-left">
+          <div class="drawer-item-icon di-blue">💬</div>
+          <div class="drawer-item-text">
+            <strong>Submit a Query</strong>
+            <span>Tell us what you're looking for</span>
+          </div>
+        </div>
+        <span class="drawer-arrow">›</span>
+      </div>
+      <div class="drawer-item">
+        <div class="drawer-item-left">
+          <div class="drawer-item-icon di-green">🎧</div>
+          <div class="drawer-item-text">
+            <strong>Contact Support</strong>
+            <span>We're here to help you</span>
+          </div>
+        </div>
+        <span class="drawer-arrow">›</span>
+      </div>
+      <div class="drawer-item">
+        <div class="drawer-item-left">
+          <div class="drawer-item-icon di-purple">ℹ️</div>
+          <div class="drawer-item-text">
+            <strong>About Us</strong>
+            <span>Our story, mission &amp; more</span>
+          </div>
+        </div>
+        <span class="drawer-arrow">›</span>
+      </div>
+
+      <div class="drawer-badges">
+        <div class="drawer-badge"><span style="color:#27AE60;">✔</span> Verified Listings</div>
+        <div class="drawer-badge"><span style="color:#F47920;">★</span> Trusted Reviews</div>
+      </div>
+      <div class="drawer-footer">PGdekho • Live Better</div>
+    </div>
+
+    <!-- Navbar -->
+    <div class="navbar">
+      <button class="icon-btn" onclick="openDrawer()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+      <div class="navbar-logo">
+        <span class="logo-pg">PG</span>
+        <div>
+          <span class="logo-text">dekho</span><sup style="font-size:9px;color:#F47920;">®</sup>
+          <span class="logo-sub">Your Accommodation Partner</span>
+        </div>
+      </div>
+      <div class="navbar-icons">
+        <button class="icon-btn" id="navSearchBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+        <button class="icon-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Scrollable Content -->
+    <div class="page-content" id="pageContent">
+
+      <!-- Hero Search -->
+      <div class="hero">
+        <h2>Find your perfect stay</h2>
+        <div class="search-card">
+          <div class="tab-row">
+            <button class="tab-btn active" id="tabPG" onclick="switchTab('PG')">🏠 PG</button>
+            <button class="tab-btn" id="tabFlat" onclick="switchTab('Flat')">🏢 Flat</button>
+          </div>
+          <div class="location-row">
+            <span class="location-pin">📍</span>
+            <select class="city-select" id="citySelect">
+              <option>Gurugram</option>
+              <option>Delhi</option>
+              <option>Noida</option>
+              <option>Bengaluru</option>
+              <option>Mumbai</option>
+              <option>Pune</option>
+              <option>Hyderabad</option>
+            </select>
+            <div class="divider-v"></div>
+            <input class="locality-input" type="text" placeholder="Locality in Gurugram..." id="localityInput" />
+          </div>
+          <button class="btn-search" onclick="doSearch()">
+            🔍 &nbsp; Search PGs
+          </button>
+        </div>
+      </div>
+
+      <!-- Own a PG Banner -->
+      <div style="height:14px;background:#fff;"></div>
+      <div class="own-banner">
+        <div class="own-icon">🏠</div>
+        <div class="own-text">
+          <strong>Own a PG or flat?</strong>
+          <span>Login to list &amp; manage your property leads...</span>
+        </div>
+        <div class="own-arrow">›</div>
+      </div>
+      <div style="height:6px;background:#fff;"></div>
+
+      <!-- PG Categories -->
+      <div class="section" style="background:#fff; padding-bottom:0;">
+        <div class="cat-row">
+          <div class="cat-card" style="background:linear-gradient(135deg,#4A90D9,#1A5FA8);" onclick="filterCategory('boys')">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:0;">🛏️</div>
+            <div class="cat-label">→ PG For Boys</div>
+          </div>
+          <div class="cat-card" style="background:linear-gradient(135deg,#E91E8C,#9C0055);" onclick="filterCategory('girls')">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:0;">🛁</div>
+            <div class="cat-label">→ PG For Girls</div>
+          </div>
+          <div class="cat-card" style="background:linear-gradient(135deg,#E8A838,#B56E00);" onclick="filterCategory('coliving')">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:0;">🛋️</div>
+            <div class="cat-label">→ PG For Co-Living</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 24/7 Support -->
+      <div class="section" style="background:#fff;">
+        <div class="support-banner">
+          <div class="support-icon">🎧</div>
+          <div class="support-text">
+            <strong>24/7 SUPPORT</strong>
+            <p>Our dedicated support team is always available to help you find the best PG or flat that fits your needs and budget.</p>
+          </div>
+        </div>
+        <div class="dots">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot active"></div>
+        </div>
+      </div>
+
+      <!-- PG for Boys -->
+      <div class="section" style="background:#fff; margin-top:8px;">
+        <div class="section-header">
+          <div class="section-title">
+            <div class="section-icon">🏠</div>
+            <h3>PG for Boys</h3>
+          </div>
+          <span class="see-all">See All ›</span>
+        </div>
+        <div class="city-chips" id="boysChips">
+          <div class="chip active" onclick="selectChip(this, 'boysChips')">Gurugram</div>
+          <div class="chip" onclick="selectChip(this, 'boysChips')">Delhi</div>
+          <div class="chip" onclick="selectChip(this, 'boysChips')">Noida</div>
+          <div class="chip" onclick="selectChip(this, 'boysChips')">Bengaluru</div>
+          <div class="chip" onclick="selectChip(this, 'boysChips')">Mumbai</div>
+        </div>
+        <div class="cards-scroll" id="boysCards">
+          <!-- Cards injected by JS -->
+        </div>
+      </div>
+
+      <!-- PG for Girls -->
+      <div class="section" style="background:#fff; margin-top:8px;">
+        <div class="section-header">
+          <div class="section-title">
+            <div class="section-icon" style="background:#F3E8FF;">👩</div>
+            <h3>PG for Girls</h3>
+          </div>
+          <span class="see-all">See All ›</span>
+        </div>
+        <div class="city-chips" id="girlsChips">
+          <div class="chip active" onclick="selectChip(this, 'girlsChips')">Gurugram</div>
+          <div class="chip" onclick="selectChip(this, 'girlsChips')">Delhi</div>
+          <div class="chip" onclick="selectChip(this, 'girlsChips')">Noida</div>
+          <div class="chip" onclick="selectChip(this, 'girlsChips')">Bengaluru</div>
+          <div class="chip" onclick="selectChip(this, 'girlsChips')">Mumbai</div>
+        </div>
+        <div class="cards-scroll" id="girlsCards"></div>
+      </div>
+
+      <!-- Co-Living Spaces -->
+      <div class="section" style="background:#fff; margin-top:8px;">
+        <div class="section-header">
+          <div class="section-title">
+            <div class="section-icon" style="background:#E8F8EF;">👥</div>
+            <h3>Co-Living Spaces</h3>
+          </div>
+          <span class="see-all">See All ›</span>
+        </div>
+        <div class="city-chips" id="colivingChips">
+          <div class="chip active" onclick="selectChip(this, 'colivingChips')">Gurugram</div>
+          <div class="chip" onclick="selectChip(this, 'colivingChips')">Delhi</div>
+          <div class="chip" onclick="selectChip(this, 'colivingChips')">Noida</div>
+          <div class="chip" onclick="selectChip(this, 'colivingChips')">Bengaluru</div>
+          <div class="chip" onclick="selectChip(this, 'colivingChips')">Mumbai</div>
+        </div>
+        <div class="cards-scroll" id="colivingCards"></div>
+      </div>
+
+      <!-- Flats for Rent -->
+      <div class="section" style="background:#fff; margin-top:8px;">
+        <div class="section-header">
+          <div class="section-title">
+            <div class="section-icon" style="background:#EAF1FB;">🏢</div>
+            <h3>Flats for Rent</h3>
+          </div>
+          <span class="see-all">See All ›</span>
+        </div>
+        <div class="city-chips" id="flatsChips">
+          <div class="chip active" onclick="selectChip(this, 'flatsChips')">Gurugram</div>
+          <div class="chip" onclick="selectChip(this, 'flatsChips')">Noida</div>
+          <div class="chip" onclick="selectChip(this, 'flatsChips')">Bengaluru</div>
+          <div class="chip" onclick="selectChip(this, 'flatsChips')">Mumbai</div>
+        </div>
+        <div class="cards-scroll" id="flatsCards"></div>
+      </div>
+
+      <!-- Find Based on Need -->
+      <div class="section" style="background:#fff; margin-top:8px;">
+        <h3 style="font-size:17px;font-weight:700;color:#1A1A1A;margin-bottom:14px;">Find PGs Based on your need</h3>
+        <div class="need-grid">
+          <div class="need-card" style="background:linear-gradient(135deg,#7B8FA1,#3D5166);">
+            <span class="need-icon">🛏️</span>
+            <span class="need-label">Single Bed</span>
+          </div>
+          <div class="need-card" style="background:linear-gradient(135deg,#C6773A,#8B4513);">
+            <span class="need-icon">🚗</span>
+            <span class="need-label">Car Parking</span>
+          </div>
+          <div class="need-card" style="background:linear-gradient(135deg,#556B8B,#2C3E50);">
+            <span class="need-icon">⭐</span>
+            <span class="need-label">Premium PG</span>
+          </div>
+          <div class="need-card" style="background:linear-gradient(135deg,#C0392B,#8E1212);">
+            <span class="need-icon">🍱</span>
+            <span class="need-label">Lunch Included</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- How It Works -->
+      <div class="section" style="background:#fff; margin-top:8px;">
+        <div class="section-header">
+          <div class="section-title">
+            <div class="section-icon">ℹ️</div>
+            <h3>How It Works</h3>
+          </div>
+        </div>
+        <div class="hiw-row">
+          <div class="hiw-step">
+            <div class="hiw-icon-wrap">
+              <span style="font-size:22px;">🔍</span>
+              <div class="hiw-badge">1</div>
+            </div>
+            <strong>Search</strong>
+            <span>Filter by city, budget &amp; amenities</span>
+          </div>
+          <div class="hiw-connector"></div>
+          <div class="hiw-step">
+            <div class="hiw-icon-wrap">
+              <span style="font-size:22px;">❤️</span>
+              <div class="hiw-badge">2</div>
+            </div>
+            <strong>Shortlist</strong>
+            <span>Save your favourites for later</span>
+          </div>
+          <div class="hiw-connector"></div>
+          <div class="hiw-step">
+            <div class="hiw-icon-wrap">
+              <span style="font-size:22px;">📞</span>
+              <div class="hiw-badge">3</div>
+            </div>
+            <strong>Contact</strong>
+            <span>Connect directly with the owner</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Why Choose PGdekho -->
+      <div class="section" style="background:#fff; margin-top:8px;">
+        <div class="section-header">
+          <div class="section-title">
+            <div class="section-icon">🏅</div>
+            <h3>Why Choose PGdekho?</h3>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div style="background:var(--orange-light);border-radius:14px;padding:16px;text-align:center;">
+            <div style="font-size:28px;margin-bottom:6px;">✅</div>
+            <strong style="font-size:13px;color:#1A1A1A;">Verified Listings</strong>
+            <p style="font-size:11px;color:#666;margin-top:4px;">All properties are physically verified</p>
+          </div>
+          <div style="background:var(--blue-light);border-radius:14px;padding:16px;text-align:center;">
+            <div style="font-size:28px;margin-bottom:6px;">⭐</div>
+            <strong style="font-size:13px;color:#1A1A1A;">Trusted Reviews</strong>
+            <p style="font-size:11px;color:#666;margin-top:4px;">Real reviews from real tenants</p>
+          </div>
+          <div style="background:#E8F8EF;border-radius:14px;padding:16px;text-align:center;">
+            <div style="font-size:28px;margin-bottom:6px;">💰</div>
+            <strong style="font-size:13px;color:#1A1A1A;">Zero Brokerage</strong>
+            <p style="font-size:11px;color:#666;margin-top:4px;">Connect directly, save money</p>
+          </div>
+          <div style="background:#F3E8FF;border-radius:14px;padding:16px;text-align:center;">
+            <div style="font-size:28px;margin-bottom:6px;">🏘️</div>
+            <strong style="font-size:13px;color:#1A1A1A;">50K+ Listings</strong>
+            <p style="font-size:11px;color:#666;margin-top:4px;">Largest PG database in India</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:20px;"></div>
+    </div><!-- /page-content -->
+
+    <!-- WhatsApp FAB -->
+    <a class="whatsapp-fab" href="https://wa.me/919999999999" target="_blank">💬</a>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" onclick="switchNav(this)">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" onclick="switchNav(this)">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span>Shortlist</span>
+      </button>
+      <button class="nav-item" onclick="switchNav(this)">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span>Search</span>
+      </button>
+      <button class="nav-item" onclick="switchNav(this)">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Profile</span>
+      </button>
+    </nav>
+
+  </div><!-- /screen-main -->
+
+</div><!-- /phone-frame -->
+
+<script>
+// ── Data ──────────────────────────────────────────────────
+const boysData = [
+  { name: "Royal PG Sector 17", loc: "Sector 17, Gurugram", rating: "5.0", price: "₹7,500 – ₹15,000", amenities: ["⛑️ First Aid Kit","⚡ Power-Back Up"], badge:"Boys", badgeClass:"badge-boys", img:"https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=300&q=70" },
+  { name: "Sakshi Boys PG", loc: "Sector 14, Gurugram", rating: "4.8", price: "₹7,500 – ₹12,000", amenities: ["🌐 Wi-Fi","⚡ Power-Back Up"], badge:"Boys", badgeClass:"badge-boys", img:"https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5?w=300&q=70" },
+  { name: "GreenLeaf PG", loc: "Sector 49, Gurugram", rating: "4.6", price: "₹6,000 – ₹11,000", amenities: ["🍽️ Meals","🌐 Wi-Fi"], badge:"Boys", badgeClass:"badge-boys", img:"https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=300&q=70" },
+];
+const girlsData = [
+  { name: "Royal Girls PG", loc: "Sector 69, Gurugram", rating: "4.9", price: "₹12,000 – ₹20,000", amenities: ["⚡ Power-Back Up","🌐 Wi-Fi"], badge:"Girls", badgeClass:"badge-girls", img:"https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=300&q=70" },
+  { name: "Bharat Girls PG", loc: "Sector 58, Gurugram", rating: "4.7", price: "₹8,500 – ₹16,000", amenities: ["⚡ Power-Back Up","🛗 Lift"], badge:"Girls", badgeClass:"badge-girls", img:"https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=300&q=70" },
+  { name: "Pink Nest PG", loc: "Sector 45, Gurugram", rating: "4.5", price: "₹9,000 – ₹14,000", amenities: ["🍽️ Meals","🌐 Wi-Fi"], badge:"Girls", badgeClass:"badge-girls", img:"https://images.unsplash.com/photo-1484154218962-a197022b5858?w=300&q=70" },
+];
+const colivingData = [
+  { name: "OM Sai Ram PG", loc: "Sector 28, Gurugram", rating: "4.8", price: "₹12,000 – ₹23,000", amenities: ["⚡ Power-Back Up","🌐 Wi-Fi","🛗 Lift"], badge:"Co-living", badgeClass:"badge-coliving", verified:true, img:"https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&q=70" },
+  { name: "Stay Residency", loc: "Sector 32, Gurugram", rating: "4.7", price: "₹12,500 – ₹22,000", amenities: ["⚡ Power-Back Up","🛗 Lift"], badge:"Co-living", badgeClass:"badge-coliving", verified:true, img:"https://images.unsplash.com/photo-1513694203232-719a280e022f?w=300&q=70" },
+  { name: "Nest Co-Living", loc: "Sector 40, Gurugram", rating: "4.9", price: "₹14,000 – ₹25,000", amenities: ["🌐 Wi-Fi","🍽️ Meals","⚡ Power-Back Up"], badge:"Co-living", badgeClass:"badge-coliving", img:"https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=300&q=70" },
+];
+const flatsData = [
+  { name: "1 RK Furnished Flat", loc: "Sector 23, Gurugram", rating: "4.5", price: "₹11,000 – ₹15,000", amenities: ["🌐 Wi-Fi","✅ Verified"], badge:"1 RK", badgeClass:"badge-boys", img:"https://images.unsplash.com/photo-1522156373667-4c7234bbd804?w=300&q=70" },
+  { name: "1 BHK Modern Flat", loc: "Sector 56, Gurugram", rating: "4.7", price: "₹18,000 – ₹24,000", amenities: ["✅ Verified","🚗 Parking"], badge:"1 BHK", badgeClass:"badge-coliving", img:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=300&q=70" },
+  { name: "2 BHK Premium Flat", loc: "DLF Phase 4, Gurugram", rating: "4.8", price: "₹28,000 – ₹35,000", amenities: ["🛗 Lift","🚗 Parking","🌐 Wi-Fi"], badge:"2 BHK", badgeClass:"badge-girls", img:"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&q=70" },
+];
+
+function buildCard(d) {
+  return `
+  <div class="pg-card">
+    <div class="pg-card-img">
+      <img src="${d.img}" alt="${d.name}" loading="lazy" />
+      <span class="pg-badge ${d.badgeClass}">${d.badge}</span>
+      ${d.verified ? '<span class="pg-badge badge-verified" style="left:auto;right:8px;top:8px;">✔ Verified</span>' : ''}
+      <div class="pg-heart" onclick="toggleHeart(this)">🤍</div>
+    </div>
+    <div class="pg-card-body">
+      <div class="pg-name">${d.name}</div>
+      <div class="pg-loc"><span>📍</span>${d.loc}</div>
+      <div class="pg-rating">★ ${d.rating}</div>
+      <div class="pg-amenities">${d.amenities.map(a=>`<span class="amenity">${a}</span>`).join('')}</div>
+      <div class="pg-price-row">
+        <div class="pg-price">Starting from<br><span>${d.price}/mo</span></div>
+        <button class="btn-view">View Details</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderCards() {
+  document.getElementById('boysCards').innerHTML   = boysData.map(buildCard).join('');
+  document.getElementById('girlsCards').innerHTML  = girlsData.map(buildCard).join('');
+  document.getElementById('colivingCards').innerHTML = colivingData.map(buildCard).join('');
+  document.getElementById('flatsCards').innerHTML  = flatsData.map(buildCard).join('');
+}
+
+// ── Tab Switcher ──
+function switchTab(t) {
+  document.getElementById('tabPG').classList.toggle('active', t==='PG');
+  document.getElementById('tabFlat').classList.toggle('active', t==='Flat');
+  document.getElementById('localityInput').placeholder = t === 'PG' ? 'Locality in Gurugram...' : 'Locality for flats...';
+}
+
+// ── City Chip Switcher ──
+function selectChip(el, groupId) {
+  document.querySelectorAll(`#${groupId} .chip`).forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ── Bottom Nav ──
+function switchNav(el) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ── Drawer ──
+function openDrawer()  { document.getElementById('sideDrawer').classList.add('open'); document.getElementById('drawerOverlay').classList.add('open'); }
+function closeDrawer() { document.getElementById('sideDrawer').classList.remove('open'); document.getElementById('drawerOverlay').classList.remove('open'); }
+
+// ── Heart ──
+function toggleHeart(el) { el.textContent = el.textContent === '🤍' ? '❤️' : '🤍'; }
+
+// ── Search ──
+function doSearch() {
+  const city = document.getElementById('citySelect').value;
+  const loc  = document.getElementById('localityInput').value;
+  alert(`Searching PGs in ${loc || city}…\n(Connect to backend to show results)`);
+}
+
+// ── Category Filter ──
+function filterCategory(cat) {
+  const el = document.getElementById('pageContent');
+  const targets = { boys:'boysCards', girls:'girlsCards', coliving:'colivingCards' };
+  if (targets[cat]) {
+    document.getElementById(targets[cat]).parentElement.scrollIntoView({ behavior:'smooth' });
+  }
+}
+
+// ── Location Permission ──
+function showMainApp(city) {
+  document.getElementById('screen-location').classList.remove('active');
+  document.getElementById('screen-main').classList.add('active');
+  renderCards();
+  if (city) {
+    const toast = document.getElementById('locationToast');
+    document.getElementById('toastCity').textContent = city;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+}
+
+function requestLocation() {
+  if (!navigator.geolocation) {
+    alert('Geolocation is not supported by your browser.');
+    skipLocation();
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const { latitude, longitude } = pos.coords;
+      // Reverse geocode using a free API
+      fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`)
+        .then(r => r.json())
+        .then(data => {
+          const city = data.address?.city || data.address?.town || data.address?.county || 'Your Location';
+          showMainApp(city);
+          // Update city dropdown if matching
+          const sel = document.getElementById('citySelect');
+          for (let i = 0; i < sel.options.length; i++) {
+            if (sel.options[i].text.toLowerCase().includes(city.toLowerCase())) { sel.selectedIndex = i; break; }
+          }
+        })
+        .catch(() => showMainApp('Your Location'));
+    },
+    (err) => {
+      let msg = 'Location access denied. Showing default listings.';
+      if (err.code === 1) msg = 'Location permission denied.';
+      console.warn(msg);
+      showMainApp(null);
+    },
+    { enableHighAccuracy: true, timeout: 10000 }
+  );
+}
+
+function skipLocation() {
+  showMainApp(null);
+}
+</script>
+</body>
+</html>
