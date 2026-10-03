@@ -794,6 +794,131 @@
     body.theme-light .btn-view { color: #FFFFFF; }
     body.theme-light .hiw-badge { color: #FFFFFF; }
 
+
+    /* ════════════════════════════
+       SHORTLIST SCREEN STYLES
+    ════════════════════════════ */
+    #screen-shortlist {
+      background: var(--app-bg);
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+    .shortlist-header {
+      padding: 14px 16px;
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--app-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+    .shortlist-header-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+    }
+    .shortlist-header-title h3 {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 0;
+    }
+    .shortlist-count-badge {
+      background: rgba(0, 210, 255, 0.12);
+      color: var(--accent-main);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 210, 255, 0.25);
+    }
+    .btn-clear-shortlist {
+      background: none;
+      border: none;
+      color: #EF4444;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 4px 6px;
+    }
+    .shortlist-scroll-area {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      display: flex;
+      flex-direction: column;
+      padding: 14px 14px 85px 14px;
+    }
+    .shortlist-empty-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 24px;
+    }
+    .shortlist-empty-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--icon-box-bg);
+      border: 1px solid var(--icon-box-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .shortlist-empty-icon svg { width: 34px; height: 34px; stroke: #EF4444; }
+    .shortlist-empty-state h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .shortlist-empty-state p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      max-width: 280px;
+      margin-bottom: 20px;
+    }
+    .btn-explore-cribs {
+      padding: 11px 22px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #00D2FF 0%, #0077FF 100%);
+      color: #000000;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(0, 210, 255, 0.3);
+    }
+    #shortlistCardsList {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    #shortlistCardsList .pg-card {
+      min-width: 0;
+      width: 100%;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+    body.theme-light #shortlistCardsList .pg-card {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    }
+
   </style>
 </head>
 <body>
@@ -1466,7 +1591,49 @@
     </div>
   </div>
 
-  <!-- Interactive Filters Bottom Sheet Modal -->
+
+  <!-- ══════════════════════════ SHORTLIST SCREEN ══════════════════════════ -->
+  <div id="screen-shortlist">
+    <div class="shortlist-header">
+      <button class="btn-back" onclick="navigateTab('home')" title="Back to Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"/>
+          <polyline points="12 19 5 12 12 5"/>
+        </svg>
+      </button>
+      <div class="shortlist-header-title">
+        <h3>My Shortlist</h3>
+        <span id="shortlistCountBadge" class="shortlist-count-badge">0 saved</span>
+      </div>
+      <button class="btn-clear-shortlist" id="btnClearShortlist" onclick="clearShortlist()" title="Clear all saved cribs">
+        Clear All
+      </button>
+    </div>
+
+    <div class="shortlist-scroll-area" id="shortlistScrollArea">
+      <!-- Empty State -->
+      <div class="shortlist-empty-state" id="shortlistEmptyState">
+        <div class="shortlist-empty-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <h3>No saved cribs yet</h3>
+        <p>Tap the heart icon on any PG or flat to save it here for fast access and comparison.</p>
+        <button class="btn-explore-cribs" onclick="navigateTab('search')">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          Explore Cribs
+        </button>
+      </div>
+
+      <!-- Shortlisted Cards List -->
+      <div id="shortlistCardsList"></div>
+    </div>
+  </div>
+
+    <!-- Interactive Filters Bottom Sheet Modal -->
   <div class="filter-modal-overlay" id="filterModalOverlay" onclick="if(event.target===this) closeFiltersModal()">
     <div class="filter-modal">
       <div class="filter-modal-header">
@@ -1551,13 +1718,15 @@ const flatsData = [
 ];
 
 function buildCard(d) {
+  const isLiked = isShortlisted(d.name);
+  const dataJson = encodeURIComponent(JSON.stringify(d));
   return `
-  <div class="pg-card">
+  <div class="pg-card" data-name="${d.name}">
     <div class="pg-card-img">
       <img src="${d.img}" alt="${d.name}" loading="lazy" />
       <span class="pg-badge ${d.badgeClass}">${d.badge}</span>
       ${d.verified ? '<span class="pg-badge badge-verified" style="left:auto;right:8px;top:8px;">✔ Verified</span>' : ''}
-      <div class="pg-heart" onclick="toggleHeart(this)">
+      <div class="pg-heart ${isLiked ? 'liked' : ''}" onclick="toggleShortlistCard('${dataJson}', this, event)">
         <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
         </svg>
@@ -1579,7 +1748,7 @@ function buildCard(d) {
       <div class="pg-amenities">${d.amenities.map(a=>`<span class="amenity"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${a}</span>`).join('')}</div>
       <div class="pg-price-row">
         <div class="pg-price">Starting from<br><span>${d.price}/mo</span></div>
-        <button class="btn-view">View Details</button>
+        <button class="btn-view" onclick="alert('${d.name}\nLocation: ${d.loc}\nPrice: ${d.price}\nRating: ${d.rating}\n\nBooking & scheduling visit...')">View Details</button>
       </div>
     </div>
   </div>`;
@@ -1615,9 +1784,90 @@ function switchNav(el) {
 function openDrawer()  { document.getElementById('sideDrawer').classList.add('open'); document.getElementById('drawerOverlay').classList.add('open'); }
 function closeDrawer() { document.getElementById('sideDrawer').classList.remove('open'); document.getElementById('drawerOverlay').classList.remove('open'); }
 
-// ── Heart ──
-function toggleHeart(el) {
-  el.classList.toggle('liked');
+// ── Shortlist Manager ──
+function getSavedShortlist() {
+  try {
+    const raw = localStorage.getItem('findmycrib_shortlist');
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  // Default sample shortlisted cribs
+  const defaults = [boysData[1], girlsData[0]];
+  saveShortlist(defaults);
+  return defaults;
+}
+
+function saveShortlist(list) {
+  try {
+    localStorage.setItem('findmycrib_shortlist', JSON.stringify(list));
+  } catch(e) {}
+}
+
+function isShortlisted(name) {
+  const list = getSavedShortlist();
+  return list.some(item => item.name === name);
+}
+
+function toggleShortlistCard(encodedJson, heartEl, event) {
+  if (event) event.stopPropagation();
+  try {
+    const item = JSON.parse(decodeURIComponent(encodedJson));
+    let list = getSavedShortlist();
+    const existingIndex = list.findIndex(x => x.name === item.name);
+
+    if (existingIndex >= 0) {
+      list.splice(existingIndex, 1);
+      heartEl.classList.remove('liked');
+    } else {
+      list.unshift(item);
+      heartEl.classList.add('liked');
+    }
+    saveShortlist(list);
+
+    // Sync all matching heart elements across page
+    document.querySelectorAll(`[data-name="${item.name}"] .pg-heart`).forEach(h => {
+      h.classList.toggle('liked', existingIndex < 0);
+    });
+
+    // If on shortlist screen, update list
+    const shortlistScreen = document.getElementById('screen-shortlist');
+    if (shortlistScreen && shortlistScreen.style.display === 'flex') {
+      renderShortlist();
+    }
+  } catch(e) {
+    console.error(e);
+  }
+}
+
+function clearShortlist() {
+  if (confirm('Clear all items from your shortlist?')) {
+    saveShortlist([]);
+    document.querySelectorAll('.pg-heart').forEach(h => h.classList.remove('liked'));
+    renderShortlist();
+  }
+}
+
+function renderShortlist() {
+  const list = getSavedShortlist();
+  const emptyState = document.getElementById('shortlistEmptyState');
+  const cardsList = document.getElementById('shortlistCardsList');
+  const countBadge = document.getElementById('shortlistCountBadge');
+  const clearBtn = document.getElementById('btnClearShortlist');
+
+  if (countBadge) {
+    countBadge.textContent = `${list.length} saved`;
+  }
+
+  if (list.length === 0) {
+    if (emptyState) emptyState.style.display = 'flex';
+    if (cardsList) cardsList.innerHTML = '';
+    if (clearBtn) clearBtn.style.display = 'none';
+  } else {
+    if (emptyState) emptyState.style.display = 'none';
+    if (clearBtn) clearBtn.style.display = 'block';
+    if (cardsList) {
+      cardsList.innerHTML = list.map(buildCard).join('');
+    }
+  }
 }
 
 // ── Search ──
@@ -1894,6 +2144,7 @@ function navigateTab(tabName) {
   const homeNav = document.getElementById('navbarMain');
   const pageContent = document.getElementById('pageContent');
   const searchScreen = document.getElementById('screen-search');
+  const shortlistScreen = document.getElementById('screen-shortlist');
   const whatsappFab = document.querySelector('.whatsapp-fab');
   
   document.querySelectorAll('.bottom-nav .nav-item').forEach(btn => btn.classList.remove('active'));
@@ -1901,6 +2152,7 @@ function navigateTab(tabName) {
   if (tabName === 'search') {
     if (homeNav) homeNav.style.display = 'none';
     if (pageContent) pageContent.style.display = 'none';
+    if (shortlistScreen) shortlistScreen.style.display = 'none';
     if (searchScreen) {
       searchScreen.style.display = 'flex';
       searchScreen.classList.add('active');
@@ -1909,12 +2161,29 @@ function navigateTab(tabName) {
     const navItem = document.getElementById('navItemSearch');
     if (navItem) navItem.classList.add('active');
 
-    // Run search query immediately so results are never empty!
     doSearchPageQuery();
+  } else if (tabName === 'shortlist') {
+    if (homeNav) homeNav.style.display = 'none';
+    if (pageContent) pageContent.style.display = 'none';
+    if (searchScreen) {
+      searchScreen.style.display = 'none';
+      searchScreen.classList.remove('active');
+    }
+    if (shortlistScreen) {
+      shortlistScreen.style.display = 'flex';
+    }
+    if (whatsappFab) whatsappFab.style.display = 'flex';
+    const navItem = document.getElementById('navItemShortlist');
+    if (navItem) navItem.classList.add('active');
+
+    renderShortlist();
   } else {
     if (searchScreen) {
       searchScreen.style.display = 'none';
       searchScreen.classList.remove('active');
+    }
+    if (shortlistScreen) {
+      shortlistScreen.style.display = 'none';
     }
     if (homeNav) homeNav.style.display = 'flex';
     if (pageContent) pageContent.style.display = 'block';
@@ -1924,10 +2193,6 @@ function navigateTab(tabName) {
       const navItem = document.getElementById('navItemHome');
       if (navItem) navItem.classList.add('active');
       pageContent.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (tabName === 'shortlist') {
-      const navItem = document.getElementById('navItemShortlist');
-      if (navItem) navItem.classList.add('active');
-      alert('Your Shortlisted Cribs will appear here!');
     } else if (tabName === 'profile') {
       const navItem = document.getElementById('navItemProfile');
       if (navItem) navItem.classList.add('active');
