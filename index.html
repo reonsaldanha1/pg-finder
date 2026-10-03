@@ -54,6 +54,18 @@
     .screen { display: none; flex-direction: column; height: 100%; width: 100%; background: var(--amoled-bg); }
     .screen.active { display: flex; }
 
+    /* SVG Icon Helpers */
+    .svg-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+    }
+    .svg-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
     /* ════════════════════════════
        LOCATION PERMISSION SCREEN
     ════════════════════════════ */
@@ -81,6 +93,7 @@
       background: linear-gradient(135deg, #00D2FF 0%, #0077FF 100%);
       color: #000000; font-size: 15px; font-weight: 700;
       margin-bottom: 12px; box-shadow: 0 4px 16px rgba(0, 210, 255, 0.3);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
       transition: all .2s;
     }
     .btn-allow:active { transform: scale(0.98); opacity: 0.9; }
@@ -95,9 +108,14 @@
       border: 1px solid var(--amoled-border);
       border-radius: 14px; padding: 16px; margin-bottom: 24px; width: 100%;
     }
-    .loc-bullet { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+    .loc-bullet { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
     .loc-bullet:last-child { margin-bottom: 0; }
-    .loc-bullet-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .loc-bullet-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: rgba(0, 210, 255, 0.1); border: 1px solid rgba(0, 210, 255, 0.2);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .loc-bullet-icon svg { width: 18px; height: 18px; stroke: var(--accent-cyan); }
     .loc-bullet-text strong { display: block; font-size: 13px; color: var(--text-primary); font-weight: 600; }
     .loc-bullet-text span  { font-size: 11px; color: var(--text-secondary); }
 
@@ -154,12 +172,14 @@
       color: #000000; border-color: transparent; font-weight: 700;
     }
     .tab-btn:not(.active) { background: #000000; color: var(--text-secondary); }
+    .tab-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; }
     
     .location-row {
       display: flex; align-items: center; border: 1px solid var(--amoled-border-light);
       background: #000000; border-radius: 10px; padding: 9px 12px; margin-bottom: 12px; gap: 8px;
     }
-    .location-pin { color: var(--accent-cyan); font-size: 16px; }
+    .location-pin { width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; }
+    .location-pin svg { width: 18px; height: 18px; stroke: var(--accent-cyan); }
     .city-select {
       background: transparent; border: none; font-size: 13px; font-weight: 600;
       cursor: pointer; outline: none; color: #FFFFFF; padding-right: 4px;
@@ -179,6 +199,7 @@
       display: flex; align-items: center; justify-content: center; gap: 8px;
       box-shadow: 0 4px 14px rgba(0, 210, 255, 0.25);
     }
+    .btn-search svg { width: 16px; height: 16px; stroke: #000000; }
 
     /* Section blocks */
     .section { padding: 18px 16px; border-bottom: 1px solid #11141A; }
@@ -187,8 +208,9 @@
     .section-icon {
       width: 32px; height: 32px; border-radius: 8px;
       background: var(--amoled-card-elevated); border: 1px solid var(--amoled-border);
-      display: flex; align-items: center; justify-content: center; font-size: 15px;
+      display: flex; align-items: center; justify-content: center;
     }
+    .section-icon svg { width: 16px; height: 16px; stroke: var(--accent-cyan); }
     .section-title h3 { font-size: 16px; font-weight: 700; color: #FFFFFF; }
     .see-all { font-size: 13px; color: var(--accent-cyan); font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 2px; }
 
@@ -232,18 +254,24 @@
       position: absolute; top: 8px; right: 8px; width: 28px; height: 28px;
       background: rgba(0, 0, 0, 0.75); border: 1px solid var(--amoled-border);
       border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 14px; cursor: pointer;
+      cursor: pointer;
     }
+    .pg-heart svg { width: 14px; height: 14px; stroke: #FFFFFF; fill: none; transition: all .15s; }
+    .pg-heart.liked svg { stroke: #EF4444; fill: #EF4444; }
+    
     .pg-card-body { padding: 12px; }
     .pg-name { font-size: 14px; font-weight: 700; color: #FFFFFF; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .pg-loc  { font-size: 11px; color: var(--text-secondary); display: flex; align-items: center; gap: 4px; margin-bottom: 6px; }
-    .pg-rating { font-size: 11px; color: #FBBF24; font-weight: 700; margin-bottom: 8px; }
+    .pg-loc svg { width: 12px; height: 12px; stroke: var(--accent-cyan); flex-shrink: 0; }
+    .pg-rating { font-size: 11px; color: #FBBF24; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 4px; }
+    .pg-rating svg { width: 12px; height: 12px; fill: #FBBF24; stroke: none; }
     .pg-amenities { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
     .amenity {
       border: 1px solid var(--amoled-border-light); background: #000000;
       color: var(--accent-cyan); border-radius: 20px;
       padding: 2px 7px; font-size: 9px; font-weight: 500; display: flex; align-items: center; gap: 3px;
     }
+    .amenity svg { width: 10px; height: 10px; stroke: currentColor; fill: none; }
     .amenity.blue { color: #60A5FA; }
     .pg-price-row { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--amoled-border); padding-top: 8px; }
     .pg-price { font-size: 10px; color: var(--text-secondary); }
@@ -260,7 +288,8 @@
       border: 1px solid var(--amoled-border); border-radius: 14px; padding: 14px 16px;
       display: flex; align-items: center; gap: 14px; cursor: pointer;
     }
-    .own-icon { width: 40px; height: 40px; background: rgba(0, 210, 255, 0.1); border: 1px solid rgba(0, 210, 255, 0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .own-icon { width: 40px; height: 40px; background: rgba(0, 210, 255, 0.1); border: 1px solid rgba(0, 210, 255, 0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .own-icon svg { width: 20px; height: 20px; stroke: var(--accent-cyan); }
     .own-text { flex: 1; }
     .own-text strong { display: block; color: #FFFFFF; font-size: 14px; font-weight: 700; }
     .own-text span   { color: var(--text-secondary); font-size: 11px; }
@@ -272,9 +301,10 @@
     .cat-card {
       min-width: 115px; height: 80px; border-radius: 12px; overflow: hidden; position: relative;
       cursor: pointer; flex-shrink: 0; border: 1px solid var(--amoled-border);
+      display: flex; align-items: center; justify-content: center;
     }
     .cat-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 100%); z-index: 1; }
-    .cat-card img { width: 100%; height: 100%; object-fit: cover; }
+    .cat-card svg { width: 28px; height: 28px; stroke: #FFFFFF; position: relative; z-index: 0; opacity: 0.6; }
     .cat-label { position: absolute; bottom: 8px; left: 8px; color: #FFFFFF; font-size: 11px; font-weight: 700; z-index: 2; display: flex; align-items: center; gap: 4px; }
 
     /* Need-based grid */
@@ -284,8 +314,8 @@
       border: 1px solid var(--amoled-border);
     }
     .need-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 100%); z-index: 1; }
-    .need-card img { width: 100%; height: 100%; object-fit: cover; }
-    .need-icon { position: absolute; top: 10px; right: 10px; z-index: 2; font-size: 18px; }
+    .need-icon { position: absolute; top: 10px; right: 10px; z-index: 2; width: 20px; height: 20px; }
+    .need-icon svg { width: 20px; height: 20px; stroke: var(--accent-cyan); }
     .need-label { position: absolute; bottom: 10px; left: 10px; color: #FFFFFF; font-size: 12px; font-weight: 700; z-index: 2; }
 
     /* How it works */
@@ -294,8 +324,9 @@
     .hiw-icon-wrap {
       position: relative; width: 52px; height: 52px; background: var(--amoled-card);
       border: 1px solid var(--amoled-border); border-radius: 14px;
-      display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 8px;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 8px;
     }
+    .hiw-icon-wrap svg { width: 22px; height: 22px; stroke: var(--accent-cyan); }
     .hiw-badge {
       position: absolute; top: -5px; right: -5px; width: 18px; height: 18px;
       background: var(--accent-cyan); border-radius: 50%; display: flex;
@@ -313,8 +344,9 @@
     .support-icon {
       width: 46px; height: 46px; background: rgba(0, 210, 255, 0.1);
       border: 1px solid rgba(0, 210, 255, 0.2); border-radius: 12px;
-      display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
+    .support-icon svg { width: 24px; height: 24px; stroke: var(--accent-cyan); }
     .support-text strong { display: block; font-size: 13px; font-weight: 700; color: #FFFFFF; margin-bottom: 2px; }
     .support-text p { font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
 
@@ -356,25 +388,28 @@
     }
     .drawer-item:hover { background: var(--amoled-card); }
     .drawer-item-left { display: flex; align-items: center; gap: 12px; }
-    .drawer-item-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; border: 1px solid var(--amoled-border); }
+    .drawer-item-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--amoled-border); }
+    .drawer-item-icon svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
     .di-cyan   { background: rgba(0, 210, 255, 0.1); color: var(--accent-cyan); }
-    .di-blue   { background: rgba(59, 130, 246, 0.1); }
-    .di-green  { background: rgba(16, 185, 129, 0.1); }
-    .di-purple { background: rgba(139, 92, 246, 0.1); }
+    .di-blue   { background: rgba(59, 130, 246, 0.1); color: #3B82F6; }
+    .di-green  { background: rgba(16, 185, 129, 0.1); color: #10B981; }
+    .di-purple { background: rgba(139, 92, 246, 0.1); color: #8B5CF6; }
     .drawer-item-text strong { display: block; font-size: 13px; color: #FFFFFF; font-weight: 600; }
     .drawer-item-text span   { font-size: 11px; color: var(--text-secondary); }
     .drawer-arrow { color: var(--text-muted); font-size: 16px; }
     .drawer-badges { display: flex; gap: 8px; padding: 14px 18px 0; flex-wrap: wrap; }
-    .drawer-badge { border: 1px solid var(--amoled-border); background: var(--amoled-card); border-radius: 20px; padding: 5px 12px; font-size: 11px; font-weight: 500; display: flex; align-items: center; gap: 5px; color: var(--text-secondary); }
+    .drawer-badge { border: 1px solid var(--amoled-border); background: var(--amoled-card); border-radius: 20px; padding: 5px 12px; font-size: 11px; font-weight: 500; display: flex; align-items: center; gap: 6px; color: var(--text-secondary); }
+    .drawer-badge svg { width: 12px; height: 12px; }
     .drawer-footer { padding: 16px 18px 0; text-align: center; color: var(--text-muted); font-size: 11px; margin-top: auto; }
 
     /* WhatsApp FAB */
     .whatsapp-fab {
       position: absolute; bottom: 72px; right: 16px; width: 48px; height: 48px;
       background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 22px; cursor: pointer; box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+      cursor: pointer; box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
       z-index: 150; text-decoration: none;
     }
+    .whatsapp-fab svg { width: 24px; height: 24px; fill: #FFFFFF; }
 
     /* Location Toast */
     .location-toast {
@@ -385,7 +420,8 @@
     }
     .location-toast.show { display: flex; animation: slideDown .3s ease; }
     @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    .toast-icon { font-size: 18px; }
+    .toast-icon { width: 20px; height: 20px; }
+    .toast-icon svg { width: 20px; height: 20px; stroke: var(--accent-cyan); }
     .toast-text strong { display: block; font-weight: 700; font-size: 13px; color: #FFFFFF; }
     .toast-text span { font-size: 11px; color: var(--accent-cyan); }
 
@@ -394,6 +430,8 @@
       background: var(--amoled-card); border: 1px solid var(--amoled-border);
       border-radius: 12px; padding: 14px 12px; text-align: center;
     }
+    .trust-card-icon { width: 32px; height: 32px; margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; }
+    .trust-card-icon svg { width: 24px; height: 24px; stroke: var(--accent-cyan); }
     .trust-card strong { display: block; font-size: 12px; color: #FFFFFF; margin-top: 4px; }
     .trust-card p { font-size: 10px; color: var(--text-secondary); margin-top: 2px; }
 
@@ -427,21 +465,36 @@
 
     <div class="loc-bullets">
       <div class="loc-bullet">
-        <span class="loc-bullet-icon">🏘️</span>
+        <div class="loc-bullet-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
         <div class="loc-bullet-text">
           <strong>Find PGs Near You</strong>
           <span>Discover verified PGs within your preferred locality</span>
         </div>
       </div>
       <div class="loc-bullet">
-        <span class="loc-bullet-icon">📍</span>
+        <div class="loc-bullet-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
         <div class="loc-bullet-text">
           <strong>Precise Recommendations</strong>
           <span>Get listings sorted by walking/commute distance</span>
         </div>
       </div>
       <div class="loc-bullet">
-        <span class="loc-bullet-icon">🔒</span>
+        <div class="loc-bullet-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
         <div class="loc-bullet-text">
           <strong>Privacy Protected</strong>
           <span>Your location is securely used only for discovery</span>
@@ -450,7 +503,11 @@
     </div>
 
     <button class="btn-allow" onclick="requestLocation()">
-      📍 &nbsp; Allow Precise Location
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+        <circle cx="12" cy="9" r="2.5"/>
+      </svg>
+      Allow Precise Location
     </button>
     <button class="btn-skip" onclick="skipLocation()">
       Not Now
@@ -462,7 +519,12 @@
 
     <!-- Location Toast -->
     <div class="location-toast" id="locationToast">
-      <span class="toast-icon">📍</span>
+      <div class="toast-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+          <circle cx="12" cy="9" r="2.5"/>
+        </svg>
+      </div>
       <div class="toast-text">
         <strong id="toastCity">Gurugram, Haryana</strong>
         <span>Precise location active</span>
@@ -488,7 +550,9 @@
       <div class="drawer-section-label">PROPERTY OWNER</div>
       <div class="drawer-item">
         <div class="drawer-item-left">
-          <div class="drawer-item-icon di-cyan">🚪</div>
+          <div class="drawer-item-icon di-cyan">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          </div>
           <div class="drawer-item-text">
             <strong>Property Owner?</strong>
             <span>Login to manage your leads</span>
@@ -500,7 +564,9 @@
       <div class="drawer-section-label">QUICK ACTIONS</div>
       <div class="drawer-item">
         <div class="drawer-item-left">
-          <div class="drawer-item-icon di-cyan">🏠</div>
+          <div class="drawer-item-icon di-cyan">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          </div>
           <div class="drawer-item-text">
             <strong>Post a Property</strong>
             <span>List your PG/room in minutes</span>
@@ -510,7 +576,9 @@
       </div>
       <div class="drawer-item">
         <div class="drawer-item-left">
-          <div class="drawer-item-icon di-blue">💬</div>
+          <div class="drawer-item-icon di-blue">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
           <div class="drawer-item-text">
             <strong>Submit a Query</strong>
             <span>Tell us what you're looking for</span>
@@ -520,7 +588,9 @@
       </div>
       <div class="drawer-item">
         <div class="drawer-item-left">
-          <div class="drawer-item-icon di-green">🎧</div>
+          <div class="drawer-item-icon di-green">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+          </div>
           <div class="drawer-item-text">
             <strong>Contact Support</strong>
             <span>We're here to help you</span>
@@ -530,7 +600,9 @@
       </div>
       <div class="drawer-item">
         <div class="drawer-item-left">
-          <div class="drawer-item-icon di-purple">ℹ️</div>
+          <div class="drawer-item-icon di-purple">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          </div>
           <div class="drawer-item-text">
             <strong>About Us</strong>
             <span>Our story, mission &amp; more</span>
@@ -540,8 +612,14 @@
       </div>
 
       <div class="drawer-badges">
-        <div class="drawer-badge"><span style="color:#10B981;">✔</span> Verified Listings</div>
-        <div class="drawer-badge"><span style="color:#00D2FF;">★</span> Trusted Reviews</div>
+        <div class="drawer-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Verified Listings
+        </div>
+        <div class="drawer-badge">
+          <svg viewBox="0 0 24 24" fill="#00D2FF" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Trusted Reviews
+        </div>
       </div>
       <div class="drawer-footer">PG Finder • Live Better</div>
     </div>
@@ -583,11 +661,22 @@
         <h2>Find your perfect stay</h2>
         <div class="search-card">
           <div class="tab-row">
-            <button class="tab-btn active" id="tabPG" onclick="switchTab('PG')">🏠 PG</button>
-            <button class="tab-btn" id="tabFlat" onclick="switchTab('Flat')">🏢 Flat</button>
+            <button class="tab-btn active" id="tabPG" onclick="switchTab('PG')">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+              PG
+            </button>
+            <button class="tab-btn" id="tabFlat" onclick="switchTab('Flat')">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="22" x2="9" y2="22.01"/><line x1="15" y1="22" x2="15" y2="22.01"/><line x1="9" y1="6" x2="9" y2="6.01"/><line x1="15" y1="6" x2="15" y2="6.01"/><line x1="9" y1="10" x2="9" y2="10.01"/><line x1="15" y1="10" x2="15" y2="10.01"/><line x1="9" y1="14" x2="9" y2="14.01"/><line x1="15" y1="14" x2="15" y2="14.01"/><line x1="9" y1="18" x2="9" y2="18.01"/><line x1="15" y1="18" x2="15" y2="18.01"/></svg>
+              Flat
+            </button>
           </div>
           <div class="location-row">
-            <span class="location-pin">📍</span>
+            <div class="location-pin">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+              </svg>
+            </div>
             <select class="city-select" id="citySelect">
               <option>Gurugram</option>
               <option>Delhi</option>
@@ -601,14 +690,21 @@
             <input class="locality-input" type="text" placeholder="Locality in Gurugram..." id="localityInput" />
           </div>
           <button class="btn-search" onclick="doSearch()">
-            🔍 &nbsp; Search PGs
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            Search PGs
           </button>
         </div>
       </div>
 
       <!-- Own a PG Banner -->
       <div class="own-banner">
-        <div class="own-icon">🏠</div>
+        <div class="own-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          </svg>
+        </div>
         <div class="own-text">
           <strong>Own a PG or flat?</strong>
           <span>Login to list &amp; manage your property leads...</span>
@@ -620,15 +716,15 @@
       <div class="section" style="padding-top:10px;">
         <div class="cat-row">
           <div class="cat-card" style="background:#0F172A;" onclick="filterCategory('boys')">
-            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;">🛏️</div>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
             <div class="cat-label">→ PG For Boys</div>
           </div>
           <div class="cat-card" style="background:#1E1B4B;" onclick="filterCategory('girls')">
-            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;">🛁</div>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 1 5 5c0 2.3-1.5 4.3-3.6 4.9v2.1h2a1 1 0 0 1 0 2h-2v4a1 1 0 0 1-2 0v-4h-2a1 1 0 0 1 0-2h2v-2.1C9.5 11.3 8 9.3 8 7a5 5 0 0 1 4-5z"/></svg>
             <div class="cat-label">→ PG For Girls</div>
           </div>
           <div class="cat-card" style="background:#064E3B;" onclick="filterCategory('coliving')">
-            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;">🛋️</div>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             <div class="cat-label">→ Co-Living</div>
           </div>
         </div>
@@ -637,7 +733,12 @@
       <!-- 24/7 Support -->
       <div class="section">
         <div class="support-banner">
-          <div class="support-icon">🎧</div>
+          <div class="support-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+              <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+            </svg>
+          </div>
           <div class="support-text">
             <strong>24/7 SUPPORT</strong>
             <p>Our dedicated support team is always available to help you find the best PG or flat that fits your needs and budget.</p>
@@ -654,7 +755,9 @@
       <div class="section">
         <div class="section-header">
           <div class="section-title">
-            <div class="section-icon">🏠</div>
+            <div class="section-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            </div>
             <h3>PG for Boys</h3>
           </div>
           <span class="see-all">See All ›</span>
@@ -673,7 +776,9 @@
       <div class="section">
         <div class="section-header">
           <div class="section-title">
-            <div class="section-icon" style="background:#2E1065;">👩</div>
+            <div class="section-icon" style="background:#2E1065;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#C084FC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M5.5 21v-2a6.5 6.5 0 0 1 13 0v2"/></svg>
+            </div>
             <h3>PG for Girls</h3>
           </div>
           <span class="see-all">See All ›</span>
@@ -692,7 +797,9 @@
       <div class="section">
         <div class="section-header">
           <div class="section-title">
-            <div class="section-icon" style="background:#064E3B;">👥</div>
+            <div class="section-icon" style="background:#064E3B;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
             <h3>Co-Living Spaces</h3>
           </div>
           <span class="see-all">See All ›</span>
@@ -711,7 +818,9 @@
       <div class="section">
         <div class="section-header">
           <div class="section-title">
-            <div class="section-icon" style="background:#0F172A;">🏢</div>
+            <div class="section-icon" style="background:#0F172A;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="22" x2="9" y2="22.01"/><line x1="15" y1="22" x2="15" y2="22.01"/><line x1="9" y1="6" x2="9" y2="6.01"/><line x1="15" y1="6" x2="15" y2="6.01"/><line x1="9" y1="10" x2="9" y2="10.01"/><line x1="15" y1="10" x2="15" y2="10.01"/><line x1="9" y1="14" x2="9" y2="14.01"/><line x1="15" y1="14" x2="15" y2="14.01"/></svg>
+            </div>
             <h3>Flats for Rent</h3>
           </div>
           <span class="see-all">See All ›</span>
@@ -730,19 +839,27 @@
         <h3 style="font-size:16px;font-weight:700;color:#FFFFFF;margin-bottom:14px;">Find PGs Based on your need</h3>
         <div class="need-grid">
           <div class="need-card" style="background:linear-gradient(135deg,#0F172A,#020617);">
-            <span class="need-icon">🛏️</span>
+            <div class="need-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16"/><path d="M2 8h18a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="M6 8v9"/></svg>
+            </div>
             <span class="need-label">Single Bed</span>
           </div>
           <div class="need-card" style="background:linear-gradient(135deg,#1E293B,#0F172A);">
-            <span class="need-icon">🚗</span>
+            <div class="need-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="8" rx="2"/><path d="M5 11l1.5-4.5a2 2 0 0 1 1.9-1.5h7.2a2 2 0 0 1 1.9 1.5L19 11"/><circle cx="7.5" cy="16.5" r="1.5"/><circle cx="16.5" cy="16.5" r="1.5"/></svg>
+            </div>
             <span class="need-label">Car Parking</span>
           </div>
           <div class="need-card" style="background:linear-gradient(135deg,#1E1B4B,#0F172A);">
-            <span class="need-icon">⭐</span>
+            <div class="need-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
             <span class="need-label">Premium PG</span>
           </div>
           <div class="need-card" style="background:linear-gradient(135deg,#064E3B,#022C22);">
-            <span class="need-icon">🍱</span>
+            <div class="need-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+            </div>
             <span class="need-label">Lunch Included</span>
           </div>
         </div>
@@ -752,14 +869,16 @@
       <div class="section">
         <div class="section-header">
           <div class="section-title">
-            <div class="section-icon">ℹ️</div>
+            <div class="section-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </div>
             <h3>How It Works</h3>
           </div>
         </div>
         <div class="hiw-row">
           <div class="hiw-step">
             <div class="hiw-icon-wrap">
-              <span>🔍</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
               <div class="hiw-badge">1</div>
             </div>
             <strong>Search</strong>
@@ -768,7 +887,7 @@
           <div class="hiw-connector"></div>
           <div class="hiw-step">
             <div class="hiw-icon-wrap">
-              <span>❤️</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
               <div class="hiw-badge">2</div>
             </div>
             <strong>Shortlist</strong>
@@ -777,7 +896,7 @@
           <div class="hiw-connector"></div>
           <div class="hiw-step">
             <div class="hiw-icon-wrap">
-              <span>📞</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
               <div class="hiw-badge">3</div>
             </div>
             <strong>Contact</strong>
@@ -790,28 +909,38 @@
       <div class="section">
         <div class="section-header">
           <div class="section-title">
-            <div class="section-icon">🏅</div>
+            <div class="section-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+            </div>
             <h3>Why Choose PG Finder?</h3>
           </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
           <div class="trust-card">
-            <div style="font-size:24px;">✅</div>
+            <div class="trust-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
             <strong>Verified Listings</strong>
             <p>100% physically checked</p>
           </div>
           <div class="trust-card">
-            <div style="font-size:24px;">⭐</div>
+            <div class="trust-card-icon">
+              <svg viewBox="0 0 24 24" fill="#00D2FF" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
             <strong>Trusted Reviews</strong>
             <p>Real verified tenants</p>
           </div>
           <div class="trust-card">
-            <div style="font-size:24px;">💰</div>
+            <div class="trust-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><line x1="12" y1="18" x2="12" y2="20"/><line x1="12" y1="4" x2="12" y2="6"/></svg>
+            </div>
             <strong>Zero Brokerage</strong>
             <p>No agent fees, ever</p>
           </div>
           <div class="trust-card">
-            <div style="font-size:24px;">🏘️</div>
+            <div class="trust-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            </div>
             <strong>50K+ Listings</strong>
             <p>Pan-India network</p>
           </div>
@@ -822,7 +951,11 @@
     </div><!-- /page-content -->
 
     <!-- WhatsApp FAB -->
-    <a class="whatsapp-fab" href="https://wa.me/919999999999" target="_blank">💬</a>
+    <a class="whatsapp-fab" href="https://wa.me/919999999999" target="_blank">
+      <svg viewBox="0 0 24 24">
+        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+      </svg>
+    </a>
 
     <!-- Bottom Nav -->
     <nav class="bottom-nav">
@@ -851,24 +984,24 @@
 <script>
 // ── Data ──────────────────────────────────────────────────
 const boysData = [
-  { name: "Royal PG Sector 17", loc: "Sector 17, Gurugram", rating: "5.0", price: "₹7,500 – ₹15,000", amenities: ["⛑️ First Aid Kit","⚡ Power-Back Up"], badge:"Boys", badgeClass:"badge-boys", img:"https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=300&q=70" },
-  { name: "Sakshi Boys PG", loc: "Sector 14, Gurugram", rating: "4.8", price: "₹7,500 – ₹12,000", amenities: ["🌐 Wi-Fi","⚡ Power-Back Up"], badge:"Boys", badgeClass:"badge-boys", img:"https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5?w=300&q=70" },
-  { name: "GreenLeaf PG", loc: "Sector 49, Gurugram", rating: "4.6", price: "₹6,000 – ₹11,000", amenities: ["🍽️ Meals","🌐 Wi-Fi"], badge:"Boys", badgeClass:"badge-boys", img:"https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=300&q=70" },
+  { name: "Royal PG Sector 17", loc: "Sector 17, Gurugram", rating: "5.0", price: "₹7,500 – ₹15,000", amenities: ["First Aid Kit","Power-Back Up"], badge:"Boys", badgeClass:"badge-boys", img:"https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=300&q=70" },
+  { name: "Sakshi Boys PG", loc: "Sector 14, Gurugram", rating: "4.8", price: "₹7,500 – ₹12,000", amenities: ["Wi-Fi","Power-Back Up"], badge:"Boys", badgeClass:"badge-boys", img:"https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5?w=300&q=70" },
+  { name: "GreenLeaf PG", loc: "Sector 49, Gurugram", rating: "4.6", price: "₹6,000 – ₹11,000", amenities: ["Meals","Wi-Fi"], badge:"Boys", badgeClass:"badge-boys", img:"https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=300&q=70" },
 ];
 const girlsData = [
-  { name: "Royal Girls PG", loc: "Sector 69, Gurugram", rating: "4.9", price: "₹12,000 – ₹20,000", amenities: ["⚡ Power-Back Up","🌐 Wi-Fi"], badge:"Girls", badgeClass:"badge-girls", img:"https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=300&q=70" },
-  { name: "Bharat Girls PG", loc: "Sector 58, Gurugram", rating: "4.7", price: "₹8,500 – ₹16,000", amenities: ["⚡ Power-Back Up","🛗 Lift"], badge:"Girls", badgeClass:"badge-girls", img:"https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=300&q=70" },
-  { name: "Pink Nest PG", loc: "Sector 45, Gurugram", rating: "4.5", price: "₹9,000 – ₹14,000", amenities: ["🍽️ Meals","🌐 Wi-Fi"], badge:"Girls", badgeClass:"badge-girls", img:"https://images.unsplash.com/photo-1484154218962-a197022b5858?w=300&q=70" },
+  { name: "Royal Girls PG", loc: "Sector 69, Gurugram", rating: "4.9", price: "₹12,000 – ₹20,000", amenities: ["Power-Back Up","Wi-Fi"], badge:"Girls", badgeClass:"badge-girls", img:"https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=300&q=70" },
+  { name: "Bharat Girls PG", loc: "Sector 58, Gurugram", rating: "4.7", price: "₹8,500 – ₹16,000", amenities: ["Power-Back Up","Lift"], badge:"Girls", badgeClass:"badge-girls", img:"https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=300&q=70" },
+  { name: "Pink Nest PG", loc: "Sector 45, Gurugram", rating: "4.5", price: "₹9,000 – ₹14,000", amenities: ["Meals","Wi-Fi"], badge:"Girls", badgeClass:"badge-girls", img:"https://images.unsplash.com/photo-1484154218962-a197022b5858?w=300&q=70" },
 ];
 const colivingData = [
-  { name: "OM Sai Ram PG", loc: "Sector 28, Gurugram", rating: "4.8", price: "₹12,000 – ₹23,000", amenities: ["⚡ Power-Back Up","🌐 Wi-Fi","🛗 Lift"], badge:"Co-living", badgeClass:"badge-coliving", verified:true, img:"https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&q=70" },
-  { name: "Stay Residency", loc: "Sector 32, Gurugram", rating: "4.7", price: "₹12,500 – ₹22,000", amenities: ["⚡ Power-Back Up","🛗 Lift"], badge:"Co-living", badgeClass:"badge-coliving", verified:true, img:"https://images.unsplash.com/photo-1513694203232-719a280e022f?w=300&q=70" },
-  { name: "Nest Co-Living", loc: "Sector 40, Gurugram", rating: "4.9", price: "₹14,000 – ₹25,000", amenities: ["🌐 Wi-Fi","🍽️ Meals","⚡ Power-Back Up"], badge:"Co-living", badgeClass:"badge-coliving", img:"https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=300&q=70" },
+  { name: "OM Sai Ram PG", loc: "Sector 28, Gurugram", rating: "4.8", price: "₹12,000 – ₹23,000", amenities: ["Power-Back Up","Wi-Fi","Lift"], badge:"Co-living", badgeClass:"badge-coliving", verified:true, img:"https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=300&q=70" },
+  { name: "Stay Residency", loc: "Sector 32, Gurugram", rating: "4.7", price: "₹12,500 – ₹22,000", amenities: ["Power-Back Up","Lift"], badge:"Co-living", badgeClass:"badge-coliving", verified:true, img:"https://images.unsplash.com/photo-1513694203232-719a280e022f?w=300&q=70" },
+  { name: "Nest Co-Living", loc: "Sector 40, Gurugram", rating: "4.9", price: "₹14,000 – ₹25,000", amenities: ["Wi-Fi","Meals","Power-Back Up"], badge:"Co-living", badgeClass:"badge-coliving", img:"https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=300&q=70" },
 ];
 const flatsData = [
-  { name: "1 RK Furnished Flat", loc: "Sector 23, Gurugram", rating: "4.5", price: "₹11,000 – ₹15,000", amenities: ["🌐 Wi-Fi","✅ Verified"], badge:"1 RK", badgeClass:"badge-boys", img:"https://images.unsplash.com/photo-1522156373667-4c7234bbd804?w=300&q=70" },
-  { name: "1 BHK Modern Flat", loc: "Sector 56, Gurugram", rating: "4.7", price: "₹18,000 – ₹24,000", amenities: ["✅ Verified","🚗 Parking"], badge:"1 BHK", badgeClass:"badge-coliving", img:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=300&q=70" },
-  { name: "2 BHK Premium Flat", loc: "DLF Phase 4, Gurugram", rating: "4.8", price: "₹28,000 – ₹35,000", amenities: ["🛗 Lift","🚗 Parking","🌐 Wi-Fi"], badge:"2 BHK", badgeClass:"badge-girls", img:"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&q=70" },
+  { name: "1 RK Furnished Flat", loc: "Sector 23, Gurugram", rating: "4.5", price: "₹11,000 – ₹15,000", amenities: ["Wi-Fi","Verified"], badge:"1 RK", badgeClass:"badge-boys", img:"https://images.unsplash.com/photo-1522156373667-4c7234bbd804?w=300&q=70" },
+  { name: "1 BHK Modern Flat", loc: "Sector 56, Gurugram", rating: "4.7", price: "₹18,000 – ₹24,000", amenities: ["Verified","Parking"], badge:"1 BHK", badgeClass:"badge-coliving", img:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=300&q=70" },
+  { name: "2 BHK Premium Flat", loc: "DLF Phase 4, Gurugram", rating: "4.8", price: "₹28,000 – ₹35,000", amenities: ["Lift","Parking","Wi-Fi"], badge:"2 BHK", badgeClass:"badge-girls", img:"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&q=70" },
 ];
 
 function buildCard(d) {
@@ -878,13 +1011,26 @@ function buildCard(d) {
       <img src="${d.img}" alt="${d.name}" loading="lazy" />
       <span class="pg-badge ${d.badgeClass}">${d.badge}</span>
       ${d.verified ? '<span class="pg-badge badge-verified" style="left:auto;right:8px;top:8px;">✔ Verified</span>' : ''}
-      <div class="pg-heart" onclick="toggleHeart(this)">🤍</div>
+      <div class="pg-heart" onclick="toggleHeart(this)">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </div>
     </div>
     <div class="pg-card-body">
       <div class="pg-name">${d.name}</div>
-      <div class="pg-loc"><span>📍</span>${d.loc}</div>
-      <div class="pg-rating">★ ${d.rating}</div>
-      <div class="pg-amenities">${d.amenities.map(a=>`<span class="amenity">${a}</span>`).join('')}</div>
+      <div class="pg-loc">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+          <circle cx="12" cy="9" r="2.5"/>
+        </svg>
+        ${d.loc}
+      </div>
+      <div class="pg-rating">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        ${d.rating}
+      </div>
+      <div class="pg-amenities">${d.amenities.map(a=>`<span class="amenity"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>${a}</span>`).join('')}</div>
       <div class="pg-price-row">
         <div class="pg-price">Starting from<br><span>${d.price}/mo</span></div>
         <button class="btn-view">View Details</button>
@@ -924,7 +1070,9 @@ function openDrawer()  { document.getElementById('sideDrawer').classList.add('op
 function closeDrawer() { document.getElementById('sideDrawer').classList.remove('open'); document.getElementById('drawerOverlay').classList.remove('open'); }
 
 // ── Heart ──
-function toggleHeart(el) { el.textContent = el.textContent === '🤍' ? '❤️' : '🤍'; }
+function toggleHeart(el) {
+  el.classList.toggle('liked');
+}
 
 // ── Search ──
 function doSearch() {
