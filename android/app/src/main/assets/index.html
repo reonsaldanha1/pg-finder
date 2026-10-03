@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>PG Finder - Your Accommodation Partner</title>
+  <title>Find My Crib - Your Accommodation Partner</title>
   <style>
     /* ── Reset & Base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -734,9 +734,9 @@
   <div id="screen-location" class="screen active">
     <div style="text-align:center; margin-bottom:12px;">
       <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:6px;">
-        <span class="logo-pg">PG</span>
+        <span class="logo-pg">Find My</span>
         <div>
-          <span style="font-size:22px;font-weight:800;color:#FFFFFF;">finder</span>
+          <span style="font-size:20px;font-weight:800;color:#FFFFFF;">Crib</span>
           <span style="font-size:10px;color:var(--accent-main);display:block;letter-spacing:.3px;margin-top:-3px;">Your Accommodation Partner</span>
         </div>
       </div>
@@ -828,8 +828,8 @@
       <div class="drawer-header">
         <div class="drawer-logo">
           <div style="display:flex;align-items:center;gap:6px;">
-            <span class="logo-pg" style="font-size:15px;padding:2px 6px;">PG</span>
-            <span style="font-size:18px;font-weight:800;color:#FFFFFF;">finder</span>
+            <span class="logo-pg" style="font-size:13px;padding:2px 6px;">Find My</span>
+            <span style="font-size:18px;font-weight:800;color:#FFFFFF;">Crib</span>
           </div>
           <span style="font-size:9px;color:var(--accent-main);margin-left:2px;">Your Accommodation Partner</span>
         </div>
@@ -926,20 +926,20 @@
           Trusted Reviews
         </div>
       </div>
-      <div class="drawer-footer">PG Finder • Live Better</div>
+      <div class="drawer-footer">Find My Crib • Live Better</div>
     </div>
 
     <!-- Navbar -->
-    <div class="navbar">
+    <div class="navbar" id="navbarMain">
       <button class="icon-btn" onclick="openDrawer()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
         </svg>
       </button>
       <div class="navbar-logo">
-        <span class="logo-pg">PG</span>
+        <span class="logo-pg">Find My</span>
         <div>
-          <span class="logo-text" style="color:var(--text-primary);">finder</span><sup style="font-size:9px;color:var(--accent-main);">®</sup>
+          <span class="logo-text" style="color:var(--text-primary);">Crib</span><sup style="font-size:9px;color:var(--accent-main);">®</sup>
           <span class="logo-sub">Your Accommodation Partner</span>
         </div>
       </div>
@@ -1011,11 +1011,11 @@
             <div class="divider-v"></div>
             <input class="locality-input" type="text" placeholder="Locality in Gurugram..." id="localityInput" />
           </div>
-          <button class="btn-search" onclick="doSearch()">
+          <button class="btn-search" onclick="openSearchFromHero()">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
-            Search PGs
+            Search Cribs
           </button>
         </div>
       </div>
@@ -1227,14 +1227,14 @@
         </div>
       </div>
 
-      <!-- Why Choose PG Finder -->
+      <!-- Why Choose Find My Crib -->
       <div class="section">
         <div class="section-header">
           <div class="section-title">
             <div class="section-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
             </div>
-            <h3>Why Choose PG Finder?</h3>
+            <h3>Why Choose Find My Crib?</h3>
           </div>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
@@ -1281,7 +1281,7 @@
 
 
   <!-- ══════════════════════════ SEARCH SCREEN (MATCHED UI) ══════════════════════════ -->
-  <div id="screen-search" class="screen">
+  <div id="screen-search" style="display:none; flex:1; min-height:0; flex-direction:column; background:var(--app-bg); overflow:hidden;">
     <div class="search-header-container">
       <!-- Top Row: Back button + PG/Flat tabs -->
       <div class="search-top-row">
@@ -1321,7 +1321,7 @@
             <circle cx="12" cy="9" r="2.5"/>
           </svg>
           <select class="city-pill-select" id="searchCitySelect" onchange="updateLocalityPlaceholder()">
-            <option value="Bengaluru">Bengal...</option>
+            <option value="Bengaluru">Bengaluru</option>
             <option value="Gurugram">Gurugram</option>
             <option value="Delhi">Delhi</option>
             <option value="Noida">Noida</option>
@@ -1331,14 +1331,14 @@
           </select>
         </div>
         <div class="locality-search-input-wrap">
-          <input type="text" id="searchLocalityInput" placeholder="Locality in Bengaluru..." />
+          <input type="text" id="searchLocalityInput" placeholder="Locality in Bengaluru..." onkeydown="if(event.key==='Enter') doSearchPageQuery();" />
         </div>
       </div>
 
       <!-- Third Row: Filters Button + Search Button -->
       <div class="search-action-row">
         <button class="btn-filters" onclick="alert('Filters: Budget, Sharing type, Food, AC, Parking')">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <line x1="4" y1="21" x2="4" y2="14"/>
             <line x1="4" y1="10" x2="4" y2="3"/>
             <line x1="12" y1="21" x2="12" y2="12"/>
@@ -1362,7 +1362,7 @@
     </div>
 
     <!-- Empty State / Search Prompt Body matching Screenshot -->
-    <div class="search-placeholder-content">
+    <div class="search-placeholder-content" id="searchPlaceholder" style="overflow-y:auto;">
       <div class="search-huge-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"/>
@@ -1372,9 +1372,18 @@
       <h3 id="searchPlaceholderTitle">Find your perfect PG</h3>
       <p id="searchPlaceholderSub">Choose a city and tap Search</p>
     </div>
+
+    <!-- Results Container -->
+    <div id="searchResultsContainer" style="display:none; flex:1; overflow-y:auto; padding:14px; -webkit-overflow-scrolling:touch;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <span id="searchResultsCount" style="font-size:13px; font-weight:700; color:var(--text-primary);">Available Cribs</span>
+        <button onclick="clearSearchQuery()" style="background:none; border:none; color:var(--accent-main); font-size:12px; font-weight:600; cursor:pointer;">Clear</button>
+      </div>
+      <div id="searchResultsList" style="display:flex; flex-direction:column; gap:12px; padding-bottom:20px;"></div>
+    </div>
   </div>
 
-    <!-- Bottom Nav -->
+      <!-- Bottom Nav -->
     <nav class="bottom-nav">
       <button class="nav-item active" id="navItemHome" onclick="navigateTab('home')">
         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -1584,7 +1593,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ── Theme Switcher ──
 function initTheme() {
-  const savedTheme = localStorage.getItem('pgfinder_theme') || 'dark';
+  const savedTheme = localStorage.getItem('findmycrib_theme') || localStorage.getItem('pgfinder_theme') || 'dark';
   applyTheme(savedTheme);
 }
 
@@ -1592,7 +1601,7 @@ function toggleTheme() {
   const isCurrentlyLight = document.body.classList.contains('theme-light');
   const nextTheme = isCurrentlyLight ? 'dark' : 'light';
   applyTheme(nextTheme);
-  localStorage.setItem('pgfinder_theme', nextTheme);
+  localStorage.setItem('findmycrib_theme', nextTheme);
 }
 
 function applyTheme(theme) {
@@ -1623,30 +1632,69 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ── Tab & Screen Navigation ──
 function navigateTab(tabName) {
-  const homeScreen = document.getElementById('screen-main');
-  const searchScreen = document.getElementById('screen-search');
+  const homeNav = document.getElementById('navbarMain');
   const pageContent = document.getElementById('pageContent');
+  const searchScreen = document.getElementById('screen-search');
+  const whatsappFab = document.querySelector('.whatsapp-fab');
   
   document.querySelectorAll('.bottom-nav .nav-item').forEach(btn => btn.classList.remove('active'));
 
   if (tabName === 'search') {
-    homeScreen.style.display = 'none';
-    searchScreen.classList.add('active');
-    document.getElementById('navItemSearch').classList.add('active');
+    if (homeNav) homeNav.style.display = 'none';
+    if (pageContent) pageContent.style.display = 'none';
+    if (whatsappFab) whatsappFab.style.display = 'none';
+    if (searchScreen) {
+      searchScreen.style.display = 'flex';
+    }
+    const navItem = document.getElementById('navItemSearch');
+    if (navItem) navItem.classList.add('active');
   } else {
-    searchScreen.classList.remove('active');
-    homeScreen.style.display = 'flex';
-    
+    if (searchScreen) {
+      searchScreen.style.display = 'none';
+    }
+    if (homeNav) homeNav.style.display = 'flex';
+    if (pageContent) pageContent.style.display = 'block';
+    if (whatsappFab) whatsappFab.style.display = 'flex';
+
     if (tabName === 'home') {
-      document.getElementById('navItemHome').classList.add('active');
+      const navItem = document.getElementById('navItemHome');
+      if (navItem) navItem.classList.add('active');
       pageContent.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (tabName === 'shortlist') {
-      document.getElementById('navItemShortlist').classList.add('active');
-      alert('Your Shortlisted PGs will appear here!');
+      const navItem = document.getElementById('navItemShortlist');
+      if (navItem) navItem.classList.add('active');
+      alert('Your Shortlisted Cribs will appear here!');
     } else if (tabName === 'profile') {
-      document.getElementById('navItemProfile').classList.add('active');
-      alert('Your PG Finder Profile & Booking History');
+      const navItem = document.getElementById('navItemProfile');
+      if (navItem) navItem.classList.add('active');
+      alert('Find My Crib - Profile & Booking History');
     }
+  }
+}
+
+function openSearchFromHero() {
+  const city = document.getElementById('citySelect').value;
+  const loc = document.getElementById('localityInput').value;
+  navigateTab('search');
+  if (city) {
+    const searchCity = document.getElementById('searchCitySelect');
+    if (searchCity) {
+      for (let i = 0; i < searchCity.options.length; i++) {
+        if (searchCity.options[i].value.toLowerCase() === city.toLowerCase() ||
+            searchCity.options[i].text.toLowerCase().includes(city.toLowerCase())) {
+          searchCity.selectedIndex = i;
+          break;
+        }
+      }
+    }
+  }
+  if (loc) {
+    const locInput = document.getElementById('searchLocalityInput');
+    if (locInput) locInput.value = loc;
+  }
+  updateLocalityPlaceholder();
+  if (loc) {
+    doSearchPageQuery();
   }
 }
 
@@ -1656,20 +1704,59 @@ function switchSearchType(type) {
   document.getElementById('searchTabFlat').classList.toggle('active', !isPG);
   document.getElementById('searchPlaceholderTitle').textContent = isPG ? 'Find your perfect PG' : 'Find your perfect Flat';
   updateLocalityPlaceholder();
+  const resultsContainer = document.getElementById('searchResultsContainer');
+  if (resultsContainer && resultsContainer.style.display === 'block') {
+    doSearchPageQuery();
+  }
 }
 
 function updateLocalityPlaceholder() {
   const city = document.getElementById('searchCitySelect').value;
-  const isPG = document.getElementById('searchTabPG').classList.contains('active');
   document.getElementById('searchLocalityInput').placeholder = `Locality in ${city}...`;
 }
 
 function doSearchPageQuery() {
-  const city = document.getElementById('searchCitySelect').value;
-  const loc = document.getElementById('searchLocalityInput').value;
+  const city = document.getElementById('searchCitySelect').value.trim();
+  const loc = document.getElementById('searchLocalityInput').value.trim().toLowerCase();
   const isPG = document.getElementById('searchTabPG').classList.contains('active');
-  const typeStr = isPG ? 'PGs & Coliving' : 'Flats';
-  alert(`Searching ${typeStr} in ${loc || city}...`);
+  
+  const pool = isPG ? [...boysData, ...girlsData, ...colivingData] : flatsData;
+  let matches = pool.filter(item => {
+    const itemLoc = (item.loc || '').toLowerCase();
+    const itemName = (item.name || '').toLowerCase();
+    if (!loc) {
+      return itemLoc.includes(city.toLowerCase());
+    }
+    return itemLoc.includes(loc) || itemName.includes(loc) || itemLoc.includes(city.toLowerCase());
+  });
+
+  if (matches.length === 0) {
+    matches = pool;
+  }
+
+  const placeholder = document.getElementById('searchPlaceholder');
+  const resultsContainer = document.getElementById('searchResultsContainer');
+  const resultsList = document.getElementById('searchResultsList');
+  const resultsCount = document.getElementById('searchResultsCount');
+
+  if (placeholder) placeholder.style.display = 'none';
+  if (resultsContainer) resultsContainer.style.display = 'block';
+  if (resultsCount) {
+    resultsCount.textContent = `${matches.length} ${isPG ? 'PGs & Coliving' : 'Flats'} found in ${loc || city}`;
+  }
+  if (resultsList) {
+    resultsList.innerHTML = matches.map(buildCard).join('');
+  }
+}
+
+function clearSearchQuery() {
+  document.getElementById('searchLocalityInput').value = '';
+  const placeholder = document.getElementById('searchPlaceholder');
+  const resultsContainer = document.getElementById('searchResultsContainer');
+  const resultsList = document.getElementById('searchResultsList');
+  if (placeholder) placeholder.style.display = 'flex';
+  if (resultsContainer) resultsContainer.style.display = 'none';
+  if (resultsList) resultsList.innerHTML = '';
 }
 
 </script>

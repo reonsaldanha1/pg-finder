@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "PGFinder"
+rootProject.name = "FindMyCrib"
 include ':app'
