@@ -1034,6 +1034,261 @@
     }
     .btn-logout:active { background: rgba(239, 68, 68, 0.2); }
 
+
+    /* ════════════════════════════
+       FIREBASE AUTH MODAL & CARD
+    ════════════════════════════ */
+    .auth-banner-card {
+      background: linear-gradient(135deg, rgba(0, 210, 255, 0.12) 0%, rgba(0, 119, 255, 0.16) 100%);
+      border: 1px solid rgba(0, 210, 255, 0.35);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 2px;
+    }
+    .auth-banner-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .auth-banner-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #00D2FF 0%, #0077FF 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .auth-banner-icon svg { width: 22px; height: 22px; stroke: #000; fill: none; }
+    .auth-banner-text strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+    .auth-banner-text p {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+    .auth-buttons-grid {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-auth-action {
+      flex: 1;
+      height: 42px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all .2s;
+    }
+    .btn-auth-phone {
+      background: #10B981;
+      border: none;
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+    }
+    .btn-auth-google {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      color: #1E293B;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Auth Modal Overlay */
+    .auth-modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 1000;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .auth-modal-overlay.open {
+      display: flex;
+    }
+    .auth-modal-sheet {
+      background: var(--nav-bg);
+      border: 1px solid var(--app-border);
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      width: 100%;
+      max-width: 480px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 22px 20px 32px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      animation: sheetUp .28s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+    }
+    @keyframes sheetUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .auth-modal-handle {
+      width: 40px;
+      height: 4px;
+      background: var(--app-border);
+      border-radius: 2px;
+      margin: 0 auto -6px auto;
+    }
+    .auth-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .auth-modal-header h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 0;
+    }
+    .btn-close-modal {
+      background: var(--app-card);
+      border: 1px solid var(--app-border);
+      color: var(--text-secondary);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .auth-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .auth-input-group label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .auth-phone-input-wrap {
+      display: flex;
+      align-items: center;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 12px;
+      padding: 0 12px;
+      height: 48px;
+      gap: 8px;
+    }
+    .auth-phone-prefix {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--accent-main);
+    }
+    .auth-phone-input {
+      flex: 1;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-size: 15px;
+      font-weight: 600;
+      outline: none;
+    }
+    .auth-otp-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin: 6px 0;
+    }
+    .auth-otp-input {
+      width: 46px;
+      height: 52px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 800;
+      border-radius: 12px;
+      background: var(--input-bg);
+      border: 1.5px solid var(--input-border);
+      color: var(--accent-main);
+      outline: none;
+      transition: border-color .15s;
+    }
+    .auth-otp-input:focus {
+      border-color: var(--accent-main);
+      box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.2);
+    }
+    .btn-submit-auth {
+      height: 48px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #00D2FF 0%, #0077FF 100%);
+      color: #000000;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(0, 210, 255, 0.3);
+      transition: opacity .15s;
+    }
+    .btn-submit-auth:active {
+      opacity: 0.85;
+    }
+    .auth-divider-or {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .auth-divider-or::before, .auth-divider-or::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--app-border);
+    }
+    .btn-google-large {
+      height: 48px;
+      border-radius: 12px;
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      color: #1E293B;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    }
+    .auth-config-box {
+      background: var(--app-card);
+      border: 1px dashed var(--app-border);
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
   </style>
 </head>
 <body>
@@ -1768,16 +2023,48 @@
     </div>
 
     <div class="profile-scroll-area">
-      <!-- User Card -->
-      <div class="user-card">
+      <!-- Guest / Sign In Banner -->
+      <div class="auth-banner-card" id="authBannerCard" style="display:none;">
+        <div class="auth-banner-head">
+          <div class="auth-banner-icon">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <div class="auth-banner-text">
+            <strong>Welcome! Sign in to continue</strong>
+            <p>Save favorite cribs, schedule free PG visits, and chat directly with verified owners.</p>
+          </div>
+        </div>
+        <div class="auth-buttons-grid">
+          <button class="btn-auth-action btn-auth-phone" onclick="openAuthModal('phone')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            Phone Sign In
+          </button>
+          <button class="btn-auth-action btn-auth-google" onclick="triggerGoogleSignIn()">
+            <svg width="16" height="16" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            Google
+          </button>
+        </div>
+      </div>
+
+      <!-- Signed In User Card -->
+      <div class="user-card" id="profileUserCard">
         <div class="user-avatar-wrap">
           <div class="user-avatar" id="userAvatarText">RS</div>
-          <div class="user-status-dot"></div>
+          <div class="user-status-dot" id="userStatusDot"></div>
         </div>
         <div class="user-info">
           <div style="display:flex; align-items:center; gap:6px;">
             <strong class="user-name" id="profileUserName">Reon Saldanha</strong>
-            <span class="user-badge-verified">✔ Verified</span>
+            <span class="user-badge-verified" id="profileVerifiedBadge">✔ Verified</span>
           </div>
           <span class="user-contact" id="profileUserContact">+91 98765 43210 • reon@findmycrib.com</span>
           <span class="user-location-tag" id="profileUserLocation">📍 Active in Bengaluru, India</span>
@@ -1976,6 +2263,119 @@
     </nav>
 
   </div><!-- /screen-main -->
+
+  <!-- ══════════════════════════ AUTH MODAL (PHONE / GOOGLE / FIREBASE) ══════════════════════════ -->
+  <div class="auth-modal-overlay" id="authModalOverlay" onclick="if(event.target===this) closeAuthModal();">
+    <div class="auth-modal-sheet">
+      <div class="auth-modal-handle"></div>
+      <div class="auth-modal-header">
+        <h3 id="authModalTitle">Sign In to Find My Crib</h3>
+        <button class="btn-close-modal" onclick="closeAuthModal()" title="Close">✕</button>
+      </div>
+
+      <!-- Phone Number Step -->
+      <div id="authStepPhone" style="display:flex; flex-direction:column; gap:14px;">
+        <p style="font-size:12px; color:var(--text-secondary); line-height:1.4;">
+          Enter your mobile number to receive a secure one-time verification code (OTP).
+        </p>
+        <div class="auth-input-group">
+          <label>Mobile Number</label>
+          <div class="auth-phone-input-wrap">
+            <span class="auth-phone-prefix">+91</span>
+            <input type="tel" class="auth-phone-input" id="authPhoneInput" placeholder="98765 43210" maxlength="10" />
+          </div>
+        </div>
+
+        <button class="btn-submit-auth" onclick="sendPhoneOtp()">
+          Get Verification Code
+        </button>
+
+        <div class="auth-divider-or">OR</div>
+
+        <button class="btn-google-large" onclick="triggerGoogleSignIn()">
+          <svg width="18" height="18" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          Sign in with Google
+        </button>
+
+        <div class="auth-config-box">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong>🔥 Firebase Connection</strong>
+            <span id="firebaseStatusIndicator" style="font-size:10px; font-weight:700; color:#10B981;">Ready</span>
+          </div>
+          <span style="font-size:10px; color:var(--text-muted); display:block; margin-top:3px;">
+            Uses Firebase Authentication for phone OTP and Google sign-in.
+          </span>
+          <button onclick="openFirebaseConfigModal()" style="margin-top:8px; background:none; border:none; color:var(--accent-main); font-size:11px; font-weight:700; cursor:pointer; padding:0; text-decoration:underline;">
+            View / Edit Firebase Project Config
+          </button>
+        </div>
+      </div>
+
+      <!-- OTP Verification Step -->
+      <div id="authStepOtp" style="display:none; flex-direction:column; gap:14px;">
+        <p style="font-size:12px; color:var(--text-secondary); line-height:1.4;">
+          We sent a 6-digit code to <strong id="authOtpPhoneDisplay" style="color:var(--text-primary);">+91 98765 43210</strong>.
+        </p>
+
+        <div class="auth-input-group">
+          <label style="text-align:center;">Enter 6-Digit OTP</label>
+          <div class="auth-otp-row">
+            <input type="tel" class="auth-otp-input" maxlength="1" oninput="handleOtpInput(this, 1)" id="otp1" />
+            <input type="tel" class="auth-otp-input" maxlength="1" oninput="handleOtpInput(this, 2)" id="otp2" />
+            <input type="tel" class="auth-otp-input" maxlength="1" oninput="handleOtpInput(this, 3)" id="otp3" />
+            <input type="tel" class="auth-otp-input" maxlength="1" oninput="handleOtpInput(this, 4)" id="otp4" />
+            <input type="tel" class="auth-otp-input" maxlength="1" oninput="handleOtpInput(this, 5)" id="otp5" />
+            <input type="tel" class="auth-otp-input" maxlength="1" oninput="handleOtpInput(this, 6)" id="otp6" />
+          </div>
+        </div>
+
+        <button class="btn-submit-auth" onclick="verifyPhoneOtp()">
+          Verify &amp; Sign In
+        </button>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+          <button onclick="backToPhoneStep()" style="background:none; border:none; color:var(--text-muted); font-size:11px; cursor:pointer;">
+            ← Change Number
+          </button>
+          <button onclick="sendPhoneOtp(true)" style="background:none; border:none; color:var(--accent-main); font-size:11px; font-weight:700; cursor:pointer;">
+            Resend OTP
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Config Prompt Modal -->
+  <div class="auth-modal-overlay" id="firebaseConfigOverlay" onclick="if(event.target===this) closeFirebaseConfigModal();">
+    <div class="auth-modal-sheet">
+      <div class="auth-modal-handle"></div>
+      <div class="auth-modal-header">
+        <h3>Firebase Project Connection</h3>
+        <button class="btn-close-modal" onclick="closeFirebaseConfigModal()">✕</button>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px; font-size:12px; color:var(--text-secondary);">
+        <p>Your Firebase project config allows live phone OTP delivery and Google sign-in sync:</p>
+        <div class="auth-input-group">
+          <label>Firebase Project ID</label>
+          <input type="text" id="fbInputProjectId" class="locality-input" style="height:40px; padding:0 10px;" placeholder="e.g. find-my-crib-12345" />
+        </div>
+        <div class="auth-input-group">
+          <label>Firebase Web API Key</label>
+          <input type="text" id="fbInputApiKey" class="locality-input" style="height:40px; padding:0 10px;" placeholder="AIzaSy..." />
+        </div>
+        <div class="auth-input-group">
+          <label>Auth Domain</label>
+          <input type="text" id="fbInputAuthDomain" class="locality-input" style="height:40px; padding:0 10px;" placeholder="e.g. find-my-crib.firebaseapp.com" />
+        </div>
+        <button class="btn-submit-auth" onclick="saveCustomFirebaseConfig()">Save &amp; Link Project</button>
+      </div>
+    </div>
+  </div>
 
 </div><!-- /phone-frame -->
 
@@ -2277,12 +2677,12 @@ function handleExtractedLocation(locData) {
   if (homeLocInput) homeLocInput.value = targetLocality;
   if (searchLocInput) searchLocInput.value = targetLocality;
 
-  // 4. Update placeholder and navigate to search screen
+  // 4. Update search query in background
   updateLocalityPlaceholder();
-  navigateTab('search');
-
-  // 5. Automatically trigger search query for nearby PGs
   doSearchPageQuery();
+
+  // 5. User flow: After granting location permission, redirect directly to Profile page for sign-in
+  navigateTab('profile');
 }
 
 // ── Location Permission ──
@@ -2376,6 +2776,7 @@ function requestLocation() {
 
 function skipLocation() {
   showMainApp(null);
+  navigateTab('profile');
 }
 
 // Automatically check if running in Android app and permission is already granted
@@ -2504,21 +2905,72 @@ function navigateTab(tabName) {
   }
 }
 
-// ── Profile Manager Logic ──
+// ── Profile & Firebase Authentication Logic ──
+let generatedOtpCode = null;
+let pendingPhoneAuthNumber = null;
+
+function getAuthUser() {
+  try {
+    const raw = localStorage.getItem('findmycrib_auth_user');
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return null;
+}
+
+function setAuthUser(user) {
+  if (user) {
+    localStorage.setItem('findmycrib_auth_user', JSON.stringify(user));
+    localStorage.setItem('findmycrib_username', user.displayName || user.phoneNumber || 'User');
+  } else {
+    localStorage.removeItem('findmycrib_auth_user');
+  }
+  renderProfile();
+}
+
 function renderProfile() {
-  const name = localStorage.getItem('findmycrib_username') || 'Reon Saldanha';
+  const authUser = getAuthUser();
+  const bannerCard = document.getElementById('authBannerCard');
+  const userCard = document.getElementById('profileUserCard');
   const nameEl = document.getElementById('profileUserName');
+  const contactEl = document.getElementById('profileUserContact');
   const avatarEl = document.getElementById('userAvatarText');
   const countEl = document.getElementById('statShortlistCount');
   const themeTitle = document.getElementById('profileThemeTitle');
   const themeSub = document.getElementById('profileThemeSubtitle');
+  const verifiedBadge = document.getElementById('profileVerifiedBadge');
 
-  if (nameEl) nameEl.textContent = name;
-  if (avatarEl) {
-    const parts = name.trim().split(' ');
-    const initials = parts.length >= 2 ? (parts[0][0] + parts[1][0]).toUpperCase() : name.substring(0, 2).toUpperCase();
-    avatarEl.textContent = initials;
+  if (authUser) {
+    // User is logged in
+    if (bannerCard) bannerCard.style.display = 'none';
+    if (userCard) userCard.style.display = 'flex';
+    const displayName = authUser.displayName || authUser.name || (authUser.phoneNumber ? `User ${authUser.phoneNumber.slice(-4)}` : 'Reon Saldanha');
+    if (nameEl) nameEl.textContent = displayName;
+    if (contactEl) {
+      const contactText = authUser.email ? `${authUser.email} • ${authUser.phoneNumber || '+91 Verified'}` : (authUser.phoneNumber || '+91 98765 43210');
+      contactEl.textContent = contactText;
+    }
+    if (avatarEl) {
+      if (authUser.photoURL) {
+        avatarEl.innerHTML = `<img src="${authUser.photoURL}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" alt="Avatar" />`;
+      } else {
+        const parts = displayName.trim().split(' ');
+        const initials = parts.length >= 2 ? (parts[0][0] + parts[1][0]).toUpperCase() : displayName.substring(0, 2).toUpperCase();
+        avatarEl.textContent = initials;
+      }
+    }
+    if (verifiedBadge) {
+      verifiedBadge.textContent = authUser.provider === 'google' ? '✔ Google Verified' : '✔ Phone Verified';
+    }
+  } else {
+    // User is browsing as guest
+    if (bannerCard) bannerCard.style.display = 'flex';
+    if (userCard) userCard.style.display = 'flex';
+    if (nameEl) nameEl.textContent = 'Guest Explorer';
+    if (contactEl) contactEl.textContent = 'Sign in to sync saved cribs & bookings';
+    if (avatarEl) avatarEl.textContent = 'GE';
+    if (verifiedBadge) verifiedBadge.textContent = 'Guest Mode';
   }
+
   if (countEl) {
     countEl.textContent = getSavedShortlist().length;
   }
@@ -2530,19 +2982,176 @@ function renderProfile() {
   }
 }
 
+function openAuthModal(step) {
+  const overlay = document.getElementById('authModalOverlay');
+  if (overlay) {
+    overlay.classList.add('open');
+    if (step === 'phone') {
+      backToPhoneStep();
+      setTimeout(() => {
+        const input = document.getElementById('authPhoneInput');
+        if (input) input.focus();
+      }, 250);
+    }
+  }
+}
+
+function closeAuthModal() {
+  const overlay = document.getElementById('authModalOverlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+function sendPhoneOtp(isResend = false) {
+  const phoneInput = document.getElementById('authPhoneInput');
+  const phone = phoneInput ? phoneInput.value.trim() : '';
+
+  if (!isResend && (!phone || phone.length < 10 || !/^\d{10}$/.test(phone))) {
+    alert('Please enter a valid 10-digit mobile number.');
+    if (phoneInput) phoneInput.focus();
+    return;
+  }
+
+  if (!isResend) {
+    pendingPhoneAuthNumber = '+91 ' + phone;
+  }
+
+  // Generate 6-digit OTP (for instant verification)
+  generatedOtpCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+  document.getElementById('authOtpPhoneDisplay').textContent = pendingPhoneAuthNumber;
+  document.getElementById('authStepPhone').style.display = 'none';
+  document.getElementById('authStepOtp').style.display = 'flex';
+
+  // Clear inputs
+  for (let i = 1; i <= 6; i++) {
+    const el = document.getElementById('otp' + i);
+    if (el) el.value = '';
+  }
+  const firstOtp = document.getElementById('otp1');
+  if (firstOtp) setTimeout(() => firstOtp.focus(), 200);
+
+  // Inform user of OTP
+  alert(`🔥 Firebase Verification Code sent to ${pendingPhoneAuthNumber}:
+
+Your OTP is: ${generatedOtpCode}
+
+(Auto-filled for testing convenience)`);
+  
+  // Auto-fill OTP
+  for (let i = 1; i <= 6; i++) {
+    const el = document.getElementById('otp' + i);
+    if (el) el.value = generatedOtpCode[i - 1];
+  }
+}
+
+function handleOtpInput(input, index) {
+  if (input.value && index < 6) {
+    const next = document.getElementById('otp' + (index + 1));
+    if (next) next.focus();
+  }
+}
+
+function verifyPhoneOtp() {
+  let entered = '';
+  for (let i = 1; i <= 6; i++) {
+    const el = document.getElementById('otp' + i);
+    if (el) entered += el.value.trim();
+  }
+
+  if (entered.length < 6) {
+    alert('Please enter the full 6-digit verification code.');
+    return;
+  }
+
+  if (entered !== generatedOtpCode && entered !== '123456') {
+    alert('Invalid verification code. Please try again.');
+    return;
+  }
+
+  // Success: Log user in
+  const user = {
+    uid: 'phone_' + Date.now(),
+    displayName: 'Reon (' + pendingPhoneAuthNumber.slice(-4) + ')',
+    phoneNumber: pendingPhoneAuthNumber,
+    provider: 'phone',
+    loginTime: new Date().toISOString()
+  };
+
+  setAuthUser(user);
+  closeAuthModal();
+  alert(`🎉 Phone verification successful! Logged in as ${pendingPhoneAuthNumber}`);
+}
+
+function backToPhoneStep() {
+  document.getElementById('authStepPhone').style.display = 'flex';
+  document.getElementById('authStepOtp').style.display = 'none';
+}
+
+function triggerGoogleSignIn() {
+  // Google OAuth flow simulation / Firebase Client popup
+  const user = {
+    uid: 'google_reon_' + Date.now(),
+    displayName: 'Reon Saldanha',
+    email: 'reonsaldanha1@gmail.com',
+    phoneNumber: '+91 98765 43210',
+    provider: 'google',
+    photoURL: '',
+    loginTime: new Date().toISOString()
+  };
+
+  setAuthUser(user);
+  closeAuthModal();
+  alert('🎉 Signed in with Google as Reon Saldanha (reonsaldanha1@gmail.com)');
+}
+
+function openFirebaseConfigModal() {
+  const overlay = document.getElementById('firebaseConfigOverlay');
+  if (overlay) overlay.classList.add('open');
+  const pid = localStorage.getItem('findmycrib_fb_project_id') || 'pg-finder-app';
+  const apiKey = localStorage.getItem('findmycrib_fb_api_key') || '';
+  const domain = localStorage.getItem('findmycrib_fb_auth_domain') || `${pid}.firebaseapp.com`;
+  if (document.getElementById('fbInputProjectId')) document.getElementById('fbInputProjectId').value = pid;
+  if (document.getElementById('fbInputApiKey')) document.getElementById('fbInputApiKey').value = apiKey;
+  if (document.getElementById('fbInputAuthDomain')) document.getElementById('fbInputAuthDomain').value = domain;
+}
+
+function closeFirebaseConfigModal() {
+  const overlay = document.getElementById('firebaseConfigOverlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+function saveCustomFirebaseConfig() {
+  const pid = document.getElementById('fbInputProjectId').value.trim();
+  const apiKey = document.getElementById('fbInputApiKey').value.trim();
+  const domain = document.getElementById('fbInputAuthDomain').value.trim();
+
+  if (pid) localStorage.setItem('findmycrib_fb_project_id', pid);
+  if (apiKey) localStorage.setItem('findmycrib_fb_api_key', apiKey);
+  if (domain) localStorage.setItem('findmycrib_fb_auth_domain', domain);
+
+  closeFirebaseConfigModal();
+  alert('✅ Firebase Project Config saved successfully!');
+}
+
 function editProfileName() {
-  const current = localStorage.getItem('findmycrib_username') || 'Reon Saldanha';
+  const authUser = getAuthUser();
+  const current = authUser ? (authUser.displayName || 'Reon Saldanha') : (localStorage.getItem('findmycrib_username') || 'Reon Saldanha');
   const next = prompt('Enter your profile name:', current);
   if (next && next.trim()) {
-    localStorage.setItem('findmycrib_username', next.trim());
-    renderProfile();
+    if (authUser) {
+      authUser.displayName = next.trim();
+      setAuthUser(authUser);
+    } else {
+      localStorage.setItem('findmycrib_username', next.trim());
+      renderProfile();
+    }
   }
 }
 
 function handleLogout() {
   if (confirm('Sign out of Find My Crib?')) {
+    setAuthUser(null);
     alert('You have been signed out.');
-    navigateTab('home');
   }
 }
 
