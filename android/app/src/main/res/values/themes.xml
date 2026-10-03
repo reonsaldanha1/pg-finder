@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.PGdekho" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.PGFinder" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">#F47920</item>
         <item name="colorPrimaryVariant">#D35400</item>
         <item name="colorOnPrimary">#FFFFFF</item>
