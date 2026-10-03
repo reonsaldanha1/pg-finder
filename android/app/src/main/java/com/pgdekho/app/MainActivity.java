@@ -23,6 +23,9 @@ import androidx.core.content.ContextCompat;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicBoolean;
+import android.os.Handler;
+import android.os.Looper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -129,49 +132,83 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        Location location = null;
-        if (locationManager != null) {
-            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            }
-            if (location == null && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            }
+        if (locationManager == null) {
+            sendLocationToWebView(12.9716, 77.5946);
+            return;
         }
 
-        if (location != null) {
-            sendLocationToWebView(location.getLatitude(), location.getLongitude());
-        } else if (locationManager != null) {
-            // Register one-time update
-            LocationListener listener = new LocationListener() {
-                @Override
-                public void onLocationChanged(@NonNull Location loc) {
+        // 1. Check last known location across all enabled providers
+        Location bestLocation = null;
+        try {
+            List<String> providers = locationManager.getProviders(true);
+            if (providers != null) {
+                for (String provider : providers) {
+                    try {
+                        Location loc = locationManager.getLastKnownLocation(provider);
+                        if (loc != null) {
+                            if (bestLocation == null || loc.getAccuracy() < bestLocation.getAccuracy() || loc.getTime() > bestLocation.getTime()) {
+                                bestLocation = loc;
+                            }
+                        }
+                    } catch (Exception ignored) {}
+                }
+            }
+        } catch (Exception ignored) {}
+
+        if (bestLocation != null) {
+            sendLocationToWebView(bestLocation.getLatitude(), bestLocation.getLongitude());
+            return;
+        }
+
+        // 2. Request single update from ALL available providers with 0 delay and 0 distance
+        final AtomicBoolean locationSent = new AtomicBoolean(false);
+        final LocationListener listener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location loc) {
+                if (locationSent.compareAndSet(false, true)) {
+                    try {
+                        locationManager.removeUpdates(this);
+                    } catch (Exception ignored) {}
                     sendLocationToWebView(loc.getLatitude(), loc.getLongitude());
-                    locationManager.removeUpdates(this);
                 }
-
-                @Override
-                public void onProviderDisabled(@NonNull String provider) {}
-
-                @Override
-                public void onProviderEnabled(@NonNull String provider) {}
-
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {}
-            };
-
-            try {
-                if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10, listener);
-                } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 10, listener);
-                } else {
-                    notifyLocationDenied("Location services disabled");
-                }
-            } catch (Exception e) {
-                notifyLocationDenied("Error requesting location");
             }
+            @Override
+            public void onProviderDisabled(@NonNull String provider) {}
+            @Override
+            public void onProviderEnabled(@NonNull String provider) {}
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+        };
+
+        boolean requested = false;
+        try {
+            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, listener);
+                requested = true;
+            }
+        } catch (Exception ignored) {}
+
+        try {
+            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
+                requested = true;
+            }
+        } catch (Exception ignored) {}
+
+        if (!requested) {
+            sendLocationToWebView(12.9716, 77.5946);
+            return;
         }
+
+        // 3. Fallback timeout after 2500ms so app NEVER hangs indoors or without satellite fix
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            if (locationSent.compareAndSet(false, true)) {
+                try {
+                    locationManager.removeUpdates(listener);
+                } catch (Exception ignored) {}
+                sendLocationToWebView(12.9716, 77.5946);
+            }
+        }, 2500);
     }
 
     private void sendLocationToWebView(double lat, double lon) {
