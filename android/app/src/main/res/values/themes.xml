@@ -1,0 +1,8 @@
+<resources>
+    <style name="Theme.PGdekho" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#F47920</item>
+        <item name="colorPrimaryVariant">#D35400</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="android:statusBarColor">#F47920</item>
+    </style>
+</resources>
