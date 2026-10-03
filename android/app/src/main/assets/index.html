@@ -132,6 +132,198 @@
     .screen { display: none; flex-direction: column; height: 100%; width: 100%; background: var(--app-bg); }
     .screen.active { display: flex; }
 
+    
+    /* ════════════════════════════
+       SEARCH SCREEN STYLES
+    ════════════════════════════ */
+    #screen-search {
+      background: var(--app-bg);
+      display: none;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+    #screen-search.active { display: flex; }
+
+    .search-header-container {
+      padding: 16px 14px 12px;
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--app-border);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .search-top-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-back {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--app-border);
+      background: var(--app-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .btn-back svg { width: 20px; height: 20px; stroke: var(--text-primary); }
+
+    .search-type-tabs {
+      display: flex;
+      flex: 1;
+      gap: 8px;
+    }
+
+    .search-type-tab {
+      flex: 1;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--app-border);
+      background: var(--app-card);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all .2s;
+    }
+    .search-type-tab.active {
+      background: #F47920;
+      color: #FFFFFF;
+      border-color: #F47920;
+    }
+    .search-type-tab svg { width: 16px; height: 16px; stroke: currentColor; fill: none; }
+
+    .search-input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .city-pill-select-wrap {
+      width: 115px;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--app-border);
+      background: var(--app-card);
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .city-pill-select-wrap svg { width: 16px; height: 16px; stroke: #F47920; flex-shrink: 0; }
+    .city-pill-select {
+      width: 100%;
+      background: transparent;
+      border: none;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
+      outline: none;
+      cursor: pointer;
+    }
+    .city-pill-select option { background: var(--app-card); color: var(--text-primary); }
+
+    .locality-search-input-wrap {
+      flex: 1;
+      height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--app-border);
+      background: var(--app-card);
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+    }
+    .locality-search-input-wrap input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      font-size: 13px;
+      color: var(--text-primary);
+      outline: none;
+    }
+    .locality-search-input-wrap input::placeholder { color: var(--text-muted); }
+
+    .search-action-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-filters {
+      width: 105px;
+      height: 46px;
+      border-radius: 12px;
+      border: 1px solid var(--app-border);
+      background: var(--app-card);
+      color: var(--text-primary);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-filters svg { width: 16px; height: 16px; stroke: var(--text-primary); }
+
+    .btn-search-orange {
+      flex: 1;
+      height: 46px;
+      border-radius: 12px;
+      border: none;
+      background: #F47920;
+      color: #FFFFFF;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(244, 121, 32, 0.3);
+      transition: all .2s;
+    }
+    .btn-search-orange:active { transform: scale(0.98); }
+    .btn-search-orange svg { width: 18px; height: 18px; stroke: #FFFFFF; }
+
+    /* Search Empty State Content */
+    .search-placeholder-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px;
+    }
+    .search-huge-icon {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 20px;
+      opacity: 0.25;
+    }
+    .search-huge-icon svg { width: 80px; height: 80px; stroke: var(--text-muted); }
+    .search-placeholder-content h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .search-placeholder-content p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
     /* SVG Icon Helpers */
     .svg-icon {
       display: inline-flex;
@@ -769,7 +961,7 @@
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
           </svg>
         </button>
-        <button class="icon-btn" id="navSearchBtn">
+        <button class="icon-btn" id="navSearchBtn" onclick="navigateTab('search')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
           </svg>
@@ -1087,21 +1279,116 @@
       </svg>
     </a>
 
+
+  <!-- ══════════════════════════ SEARCH SCREEN (MATCHED UI) ══════════════════════════ -->
+  <div id="screen-search" class="screen">
+    <div class="search-header-container">
+      <!-- Top Row: Back button + PG/Flat tabs -->
+      <div class="search-top-row">
+        <button class="btn-back" onclick="navigateTab('home')" title="Back to Home">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+          </svg>
+        </button>
+        <div class="search-type-tabs">
+          <button class="search-type-tab active" id="searchTabPG" onclick="switchSearchType('PG')">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            </svg>
+            PGs &amp; Coliving
+          </button>
+          <button class="search-type-tab" id="searchTabFlat" onclick="switchSearchType('Flat')">
+            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="2"/>
+              <line x1="9" y1="22" x2="9" y2="22.01"/>
+              <line x1="15" y1="22" x2="15" y2="22.01"/>
+              <line x1="9" y1="6" x2="9" y2="6.01"/>
+              <line x1="15" y1="6" x2="15" y2="6.01"/>
+              <line x1="9" y1="10" x2="9" y2="10.01"/>
+              <line x1="15" y1="10" x2="15" y2="10.01"/>
+            </svg>
+            Flats for Rent
+          </button>
+        </div>
+      </div>
+
+      <!-- Second Row: City Selector + Locality Input -->
+      <div class="search-input-row">
+        <div class="city-pill-select-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+          <select class="city-pill-select" id="searchCitySelect" onchange="updateLocalityPlaceholder()">
+            <option value="Bengaluru">Bengal...</option>
+            <option value="Gurugram">Gurugram</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Noida">Noida</option>
+            <option value="Mumbai">Mumbai</option>
+            <option value="Pune">Pune</option>
+            <option value="Hyderabad">Hyderabad</option>
+          </select>
+        </div>
+        <div class="locality-search-input-wrap">
+          <input type="text" id="searchLocalityInput" placeholder="Locality in Bengaluru..." />
+        </div>
+      </div>
+
+      <!-- Third Row: Filters Button + Search Button -->
+      <div class="search-action-row">
+        <button class="btn-filters" onclick="alert('Filters: Budget, Sharing type, Food, AC, Parking')">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" y1="21" x2="4" y2="14"/>
+            <line x1="4" y1="10" x2="4" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12" y2="3"/>
+            <line x1="20" y1="21" x2="20" y2="16"/>
+            <line x1="20" y1="12" x2="20" y2="3"/>
+            <line x1="1" y1="14" x2="7" y2="14"/>
+            <line x1="9" y1="8" x2="15" y2="8"/>
+            <line x1="17" y1="16" x2="23" y2="16"/>
+          </svg>
+          Filters
+        </button>
+        <button class="btn-search-orange" onclick="doSearchPageQuery()">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          Search
+        </button>
+      </div>
+    </div>
+
+    <!-- Empty State / Search Prompt Body matching Screenshot -->
+    <div class="search-placeholder-content">
+      <div class="search-huge-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </div>
+      <h3 id="searchPlaceholderTitle">Find your perfect PG</h3>
+      <p id="searchPlaceholderSub">Choose a city and tap Search</p>
+    </div>
+  </div>
+
     <!-- Bottom Nav -->
     <nav class="bottom-nav">
-      <button class="nav-item active" onclick="switchNav(this)">
+      <button class="nav-item active" id="navItemHome" onclick="navigateTab('home')">
         <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         <span>Home</span>
       </button>
-      <button class="nav-item" onclick="switchNav(this)">
+      <button class="nav-item" id="navItemShortlist" onclick="navigateTab('shortlist')">
         <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         <span>Shortlist</span>
       </button>
-      <button class="nav-item" onclick="switchNav(this)">
+      <button class="nav-item" id="navItemSearch" onclick="navigateTab('search')">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <span>Search</span>
       </button>
-      <button class="nav-item" onclick="switchNav(this)">
+      <button class="nav-item" id="navItemProfile" onclick="navigateTab('profile')">
         <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         <span>Profile</span>
       </button>
@@ -1332,6 +1619,58 @@ function applyTheme(theme) {
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
 });
+
+
+// ── Tab & Screen Navigation ──
+function navigateTab(tabName) {
+  const homeScreen = document.getElementById('screen-main');
+  const searchScreen = document.getElementById('screen-search');
+  const pageContent = document.getElementById('pageContent');
+  
+  document.querySelectorAll('.bottom-nav .nav-item').forEach(btn => btn.classList.remove('active'));
+
+  if (tabName === 'search') {
+    homeScreen.style.display = 'none';
+    searchScreen.classList.add('active');
+    document.getElementById('navItemSearch').classList.add('active');
+  } else {
+    searchScreen.classList.remove('active');
+    homeScreen.style.display = 'flex';
+    
+    if (tabName === 'home') {
+      document.getElementById('navItemHome').classList.add('active');
+      pageContent.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (tabName === 'shortlist') {
+      document.getElementById('navItemShortlist').classList.add('active');
+      alert('Your Shortlisted PGs will appear here!');
+    } else if (tabName === 'profile') {
+      document.getElementById('navItemProfile').classList.add('active');
+      alert('Your PG Finder Profile & Booking History');
+    }
+  }
+}
+
+function switchSearchType(type) {
+  const isPG = type === 'PG';
+  document.getElementById('searchTabPG').classList.toggle('active', isPG);
+  document.getElementById('searchTabFlat').classList.toggle('active', !isPG);
+  document.getElementById('searchPlaceholderTitle').textContent = isPG ? 'Find your perfect PG' : 'Find your perfect Flat';
+  updateLocalityPlaceholder();
+}
+
+function updateLocalityPlaceholder() {
+  const city = document.getElementById('searchCitySelect').value;
+  const isPG = document.getElementById('searchTabPG').classList.contains('active');
+  document.getElementById('searchLocalityInput').placeholder = `Locality in ${city}...`;
+}
+
+function doSearchPageQuery() {
+  const city = document.getElementById('searchCitySelect').value;
+  const loc = document.getElementById('searchLocalityInput').value;
+  const isPG = document.getElementById('searchTabPG').classList.contains('active');
+  const typeStr = isPG ? 'PGs & Coliving' : 'Flats';
+  alert(`Searching ${typeStr} in ${loc || city}...`);
+}
 
 </script>
 </body>
